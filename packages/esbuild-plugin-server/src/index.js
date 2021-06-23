@@ -9,7 +9,7 @@ const kClose = Symbol('kClose')
 export const close = plugin => plugin[kClose]()
 
 export default function server (opts = {}) {
-  const { logger = true, onLoad, onStart, onClose, ...serverOpts } = opts
+  const { onLoad, onStart, onClose, ...serverOpts } = opts
 
   let closed = false
   let server
@@ -20,7 +20,7 @@ export default function server (opts = {}) {
 
       const { absWorkingDir = process.cwd() } = build.initialOptions
       build.initialOptions.metafile = true
-      server = new Server(build.initialOptions, { logger, ...serverOpts })
+      server = new Server(build.initialOptions, { ...serverOpts })
 
       onLoad && onLoad(server)
 
@@ -40,8 +40,6 @@ export default function server (opts = {}) {
         if (!server.opened || !server.opening) {
           await server.open()
         }
-
-        server.log.info('Build Updated')
 
         server.setFiles(Object.keys(metafile.outputs).map(targetPoint => {
           const outputPath = path.resolve(absWorkingDir, targetPoint)
