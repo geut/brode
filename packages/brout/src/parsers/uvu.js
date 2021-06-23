@@ -39,6 +39,7 @@ function getResult (lines) {
 export default function uvuParser ({ target, exit, log }) {
   const lines = []
 
+  const _log = log
   log = ({ type, args }) => {
     // goes everything through stdout/stderr as uvu does
     if (type === 'error') {
@@ -46,7 +47,7 @@ export default function uvuParser ({ target, exit, log }) {
     } else if (type !== 'stdout' || type !== 'stderr') {
       type = 'stdout'
     }
-    process[type].write(args.join(' '))
+    _log({ type, args })
   }
 
   return function ({ type, args }) {

@@ -14,7 +14,8 @@ test('basic', async () => {
     command: 'webpack serve ./tests/fixtures/basic.js --config ./tests/webpack.config.js',
     log: logger(logs)
   })
-  await brout.run()
+
+  await expect(brout.run()).resolves.toBe(0)
   expect(logs).toMatchSnapshot()
 })
 
@@ -41,7 +42,7 @@ test('tap', async () => {
     log: logger(logs)
   })
 
-  await brout.run()
+  await expect(brout.run()).resolves.toBe(0)
   expect(logs).toMatchSnapshot()
 })
 
@@ -55,7 +56,7 @@ test('tap fail', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).rejects.toThrow(Error)
+  await expect(brout.run()).resolves.toBe(1)
   expect(logs).toMatchSnapshot()
 })
 
@@ -69,7 +70,7 @@ test('uvu', async () => {
     log: logger(logs)
   })
 
-  await brout.run()
+  await expect(brout.run()).resolves.toBe(0)
   expect(logs.filter(({ content }) => !content.includes('Duration'))).toMatchSnapshot()
 })
 
@@ -83,6 +84,6 @@ test('uvu fail', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).rejects.toThrow(Error)
+  await expect(brout.run()).resolves.toBe(1)
   expect(logs.filter(({ content }) => !content.includes('Duration'))).toMatchSnapshot()
 })

@@ -17,7 +17,7 @@ Array [
   },
   Object {
     "content": "warn0",
-    "type": "warning",
+    "type": "warn",
   },
   Object {
     "content": "stdout0",
@@ -162,34 +162,34 @@ exports[`uvu 1`] = `
 Array [
   Object {
     "content": "[90m• [39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "[32m  (1 / 1)
 [39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Total:     1",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "[32m
   Passed:    1[39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Skipped:   0",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Target:    chromium
 
 ",
-    "type": "log",
+    "type": "stdout",
   },
 ]
 `;
@@ -198,12 +198,12 @@ exports[`uvu fail 1`] = `
 Array [
   Object {
     "content": "[31m✘ [39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "[31m  (0 / 1)
 [39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
@@ -221,29 +221,29 @@ Array [
 
 
 ",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Total:     1",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "[31m
   Passed:    0[39m",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Skipped:   0",
-    "type": "log",
+    "type": "stdout",
   },
   Object {
     "content": "
   Target:    chromium
 
 ",
-    "type": "log",
+    "type": "stdout",
   },
 ]
 `;

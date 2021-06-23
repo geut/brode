@@ -1,2 +1,2 @@
 /* global $brout */
-$brout.exit('error0')
+$brout.process.exit('error0')
