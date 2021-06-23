@@ -1,0 +1,86 @@
+{
+  "name": "@geut/brout",
+  "version": "2.0.0",
+  "description": "Log your browser scripts",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "brout": "./bin/brout.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "bin",
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "posttest": "npm run lint",
+    "lint": "standard",
+    "version": "chan release --allow-yanked ${npm_package_version} && git add .",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "end-of-stream": "^1.4.4",
+    "execa": "^5.1.0",
+    "lodash.debounce": "^4.0.8",
+    "lodash.trim": "^4.5.1",
+    "p-event": "^4.2.0",
+    "p-retry": "^4.5.0",
+    "playwright": "^1.11.1",
+    "sade": "^1.7.4",
+    "tap-completed": "^1.0.0",
+    "tempy": "^1.0.1"
+  },
+  "devDependencies": {
+    "@geut/chan": "^2.0.0",
+    "budo": "^11.6.4",
+    "html-webpack-plugin": "^5.3.1",
+    "jest": "^27.0.4",
+    "standard": "^16.0.3",
+    "uvu": "^0.5.1",
+    "webpack": "^5.38.1",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2",
+    "zora": "5.0.0-alpha.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "testTimeout": 10000
+  },
+  "standard": {
+    "env": [
+      "node",
+      "browser",
+      "jest"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geut/brode.git"
+  },
+  "keywords": [
+    "stdout",
+    "log",
+    "test",
+    "runner",
+    "browser"
+  ],
+  "author": {
+    "name": "GEUT",
+    "email": "contact@geutstudio.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geut/brode/issues"
+  },
+  "homepage": "https://github.com/geut/brode#readme",
+  "publishConfig": {
+    "access": "public"
+  }
+}

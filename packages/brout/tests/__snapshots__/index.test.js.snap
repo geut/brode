@@ -1,0 +1,249 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic 1`] = `
+Array [
+  Object {
+    "content": "Target: chromium
+",
+    "type": undefined,
+  },
+  Object {
+    "content": "log0",
+    "type": "log",
+  },
+  Object {
+    "content": "error0",
+    "type": "error",
+  },
+  Object {
+    "content": "warn0",
+    "type": "warning",
+  },
+  Object {
+    "content": "stdout0",
+    "type": "stdout",
+  },
+  Object {
+    "content": "stderr0",
+    "type": "stderr",
+  },
+  Object {
+    "content": "brout",
+    "type": "log",
+  },
+]
+`;
+
+exports[`basic fail 1`] = `
+Array [
+  Object {
+    "content": "Target: chromium
+",
+    "type": undefined,
+  },
+]
+`;
+
+exports[`tap 1`] = `
+Array [
+  Object {
+    "content": "# target: chromium",
+    "type": undefined,
+  },
+  Object {
+    "content": "TAP version 13",
+    "type": "log",
+  },
+  Object {
+    "content": "# should result to the answer",
+    "type": "log",
+  },
+  Object {
+    "content": "ok 1 - answer should be 42",
+    "type": "log",
+  },
+  Object {
+    "content": "",
+    "type": "log",
+  },
+  Object {
+    "content": "1..1",
+    "type": "log",
+  },
+  Object {
+    "content": "# tests 1",
+    "type": "log",
+  },
+  Object {
+    "content": "# pass  1",
+    "type": "log",
+  },
+  Object {
+    "content": "# fail  0",
+    "type": "log",
+  },
+  Object {
+    "content": "# skip  0",
+    "type": "log",
+  },
+]
+`;
+
+exports[`tap fail 1`] = `
+Array [
+  Object {
+    "content": "# target: chromium",
+    "type": undefined,
+  },
+  Object {
+    "content": "TAP version 13",
+    "type": "log",
+  },
+  Object {
+    "content": "# should result to the answer",
+    "type": "log",
+  },
+  Object {
+    "content": "not ok 1 - answer should be 42",
+    "type": "log",
+  },
+  Object {
+    "content": "  ---",
+    "type": "log",
+  },
+  Object {
+    "content": "    actual: 42",
+    "type": "log",
+  },
+  Object {
+    "content": "    expected: 43",
+    "type": "log",
+  },
+  Object {
+    "content": "    operator: \\"equal\\"",
+    "type": "log",
+  },
+  Object {
+    "content": "    at: \\" eval (webpack-internal:///./tests/fixtures/tap-fail.js:7:5)\\"",
+    "type": "log",
+  },
+  Object {
+    "content": "  ...",
+    "type": "log",
+  },
+  Object {
+    "content": "",
+    "type": "log",
+  },
+  Object {
+    "content": "1..1",
+    "type": "log",
+  },
+  Object {
+    "content": "# tests 1",
+    "type": "log",
+  },
+  Object {
+    "content": "# pass  0",
+    "type": "log",
+  },
+  Object {
+    "content": "# fail  1",
+    "type": "log",
+  },
+  Object {
+    "content": "# skip  0",
+    "type": "log",
+  },
+]
+`;
+
+exports[`uvu 1`] = `
+Array [
+  Object {
+    "content": "[90m• [39m",
+    "type": "log",
+  },
+  Object {
+    "content": "[32m  (1 / 1)
+[39m",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Total:     1",
+    "type": "log",
+  },
+  Object {
+    "content": "[32m
+  Passed:    1[39m",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Skipped:   0",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Target:    chromium
+
+",
+    "type": "log",
+  },
+]
+`;
+
+exports[`uvu fail 1`] = `
+Array [
+  Object {
+    "content": "[31m✘ [39m",
+    "type": "log",
+  },
+  Object {
+    "content": "[31m  (0 / 1)
+[39m",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  [1m[41m FAIL [22m[49m [2m\\"[22m[31m[1mMath.sqrt()[39m[22m[2m\\"[22m
+    Expected values to be strictly equal:[3m[2m  (is)[23m[22m
+
+        [32m++3    [2m[3m(Expected)[22m[23m[39m
+        [31m--2    [2m[3m(Actual)[22m[23m[39m
+        [90m
+    at assert (webpack-internal:///../../node_modules/uvu/assert/index.mjs:48:8)
+    at Module.is (webpack-internal:///../../node_modules/uvu/assert/index.mjs:56:2)
+    at Object.eval [as handler] (webpack-internal:///./tests/fixtures/uvu-fail.js:8:43)
+    at Number.runner (webpack-internal:///../../node_modules/uvu/dist/index.mjs:85:16)
+    at exec (webpack-internal:///../../node_modules/uvu/dist/index.mjs:139:39)[39m
+
+
+",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Total:     1",
+    "type": "log",
+  },
+  Object {
+    "content": "[31m
+  Passed:    0[39m",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Skipped:   0",
+    "type": "log",
+  },
+  Object {
+    "content": "
+  Target:    chromium
+
+",
+    "type": "log",
+  },
+]
+`;

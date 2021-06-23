@@ -1,0 +1,84 @@
+{
+  "name": "@geut/browser-node-core",
+  "version": "2.0.0",
+  "description": "Core Node modules for the browser",
+  "exports": {
+    "./buffer": "./src/buffer.js",
+    "./crypto": "./src/crypto.js",
+    "./console": "./src/console.js",
+    "./events": "./src/events.js",
+    "./fs": "./src/fs.js",
+    "./global": "./src/global.js",
+    "./path": "./src/path.js",
+    "./os": "./src/os.js",
+    "./url": "./src/url.js",
+    "./util": "./src/util.js",
+    "./process": "./src/process.js",
+    "./timers": "./src/timers.js",
+    "./tty": "./src/tty.js",
+    "./stream": "./src/stream.js",
+    "./zlib": "./src/zlib.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "bin",
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "posttest": "npm run lint",
+    "lint": "standard",
+    "version": "chan release --allow-yanked ${npm_package_version} && git add .",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "buffer-browserify": "npm:buffer@^6.0.3",
+    "console-browserify": "^1.2.0",
+    "cpus": "^1.0.3",
+    "crypto-browserify": "^3.12.0",
+    "eventemitter2": "^6.4.4",
+    "fflate": "^0.7.0",
+    "native-url": "^0.3.4",
+    "path-browserify": "^1.0.1",
+    "readable-stream": "^3.6.0",
+    "util-browserify": "npm:util@^0.12.4"
+  },
+  "devDependencies": {
+    "@geut/chan": "^2.0.0",
+    "jest": "^27.0.4",
+    "standard": "^16.0.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  },
+  "standard": {
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geut/brode.git"
+  },
+  "keywords": [
+    "polyfill",
+    "browser",
+    "node",
+    "core"
+  ],
+  "author": {
+    "name": "GEUT",
+    "email": "contact@geutstudio.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geut/brode/issues"
+  },
+  "homepage": "https://github.com/geut/brode#readme"
+}

@@ -1,0 +1,72 @@
+{
+  "name": "@geut/brode",
+  "version": "2.0.0",
+  "description": "Template to create modules following the Geut path",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "bin": {
+    "brode": "./bin/brode.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "bin",
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "posttest": "npm run lint",
+    "lint": "standard",
+    "version": "chan release --allow-yanked ${npm_package_version} && git add .",
+    "prepublishOnly": "npm test"
+  },
+  "dependencies": {
+    "@geut/brout": "^2.0.0",
+    "@geut/esbuild-plugin-brolyfill": "^2.0.0",
+    "@geut/esbuild-plugin-server": "^2.0.0",
+    "esbuild": "^0.12.5",
+    "fastify": "^3.17.0",
+    "get-port": "^5.1.1",
+    "mime-types": "^2.1.31",
+    "read-pkg-up": "^8.0.0",
+    "sade": "^1.7.4"
+  },
+  "devDependencies": {
+    "@geut/chan": "^2.0.0",
+    "jest": "^27.0.4",
+    "standard": "^16.0.3"
+  },
+  "jest": {
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ]
+  },
+  "standard": {
+    "env": [
+      "jest",
+      "node",
+      "browser"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geut/brode.git"
+  },
+  "keywords": [
+    "browser",
+    "node",
+    "runner"
+  ],
+  "author": {
+    "name": "GEUT",
+    "email": "contact@geutstudio.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geut/brode/issues"
+  },
+  "homepage": "https://github.com/geut/brode#readme"
+}
