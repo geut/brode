@@ -48,7 +48,7 @@ export class Brode {
       sourcemap: true,
       plugins: [
         server({
-          log: false,
+          logger: false,
           onStart (server) {
             serverInstance = server
           }

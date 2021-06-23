@@ -26,7 +26,8 @@
     "fastify-static": "^4.2.2",
     "get-port": "^5.1.1",
     "mime-types": "^2.1.31",
-    "nanoresource-promise": "^2.0.0"
+    "nanoresource-promise": "^2.0.0",
+    "pino-pretty": "^5.0.2"
   },
   "devDependencies": {
     "@geut/chan": "^2.0.0",

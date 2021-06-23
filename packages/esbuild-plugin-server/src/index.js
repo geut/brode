@@ -9,7 +9,8 @@ const kClose = Symbol('kClose')
 export const close = plugin => plugin[kClose]()
 
 export default function server (opts = {}) {
-  const { log = true, onStart, onClose, ...serverOpts } = opts
+  const { logger = true, onLoad, onStart, onClose, ...serverOpts } = opts
+
   let closed = false
   let server
   return {
@@ -19,7 +20,9 @@ export default function server (opts = {}) {
 
       const { absWorkingDir = process.cwd() } = build.initialOptions
       build.initialOptions.metafile = true
-      server = new Server(build.initialOptions, serverOpts)
+      server = new Server(build.initialOptions, { logger, ...serverOpts })
+
+      onLoad && onLoad(server)
 
       server.once('opened', () => {
         onStart && onStart(server)
@@ -30,17 +33,15 @@ export default function server (opts = {}) {
       })
 
       build.onEnd(async result => {
-        if (result.errors.length) {
-          console.log(`build ended with ${result.errors.length} errors`)
-          return
-        }
+        const { errors, outputFiles = [], metafile } = result
+
+        if (errors.length) return
 
         if (!server.opened || !server.opening) {
-          const url = await server.open()
-          log && console.log(url)
+          await server.open()
         }
 
-        const { outputFiles = [], metafile } = result
+        server.log.info('Build Updated')
 
         server.setFiles(Object.keys(metafile.outputs).map(targetPoint => {
           const outputPath = path.resolve(absWorkingDir, targetPoint)
