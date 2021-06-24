@@ -2,11 +2,13 @@ import { promises as fs } from 'fs'
 import path from 'path'
 
 export default (build, inject = true) => {
-  const entryFormat = build.initialOptions.format
+  let { format: entryFormat, absWorkingDir = process.cwd() } = build.initialOptions
+
+  absWorkingDir = path.resolve(absWorkingDir)
 
   build.onLoad({ filter: /\.(js|mjs|cjs)$/, namespace: 'file' }, async args => {
     if (args.path.includes('/node_modules/')) return
-    if (!args.path.includes(process.cwd())) return
+    if (!args.path.includes(absWorkingDir)) return
 
     let contents = await fs.readFile(args.path, 'utf-8')
     let format = 'cjs'
@@ -14,7 +16,7 @@ export default (build, inject = true) => {
       format = 'esm'
     }
 
-    const relativePath = args.path.replace(process.cwd(), '')
+    const relativePath = path.relative(absWorkingDir, args.path)
 
     contents = contents.replace(/__BRODE_FILENAME__/g, `'${relativePath}'`)
 

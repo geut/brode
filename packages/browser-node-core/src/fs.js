@@ -18,16 +18,18 @@ if (typeof scope.$brout !== 'undefined') {
   fs.promises = {
     readFile: async (filename, enc = 'binary') => {
       let result = await scope.$brout.fs.readFile(filename)
-      if (enc === 'utf-8') return result
-      result = Buffer.from(result)
+      if (enc === 'base64') return result
+      result = Buffer.from(result, 'base64')
       if (enc === 'binary') return result
       return result.toString(enc)
     },
     writeFile: async (filename, content) => {
+      let isBuffer = false
       if (Buffer.isBuffer(content)) {
-        content = content.toString('utf-8')
+        content = content.toString('base64')
+        isBuffer = true
       }
-      return scope.$brout.fs.writeFile(filename, content)
+      return scope.$brout.fs.writeFile(filename, content, isBuffer)
     },
     stat: async filename => {
       return scope.$brout.fs.stat(filename)

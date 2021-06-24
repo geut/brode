@@ -15,8 +15,8 @@ export const actions = {
   },
 
   fsWriteFile: (args) => {
-    const [filepath, content] = args
-    return fs.writeFile(filepath, content)
+    const [filepath, content, isBuffer] = args
+    return fs.writeFile(filepath, isBuffer ? Buffer.from(content, 'base64') : content)
   },
 
   fsStat: async (args) => {
