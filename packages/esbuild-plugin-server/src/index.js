@@ -9,7 +9,7 @@ const kClose = Symbol('kClose')
 export const close = plugin => plugin[kClose]()
 
 export default function server (opts = {}) {
-  const { onLoad, onStart, onClose, ...serverOpts } = opts
+  const { onSetup, onStart, onClose, ...serverOpts } = opts
 
   let closed = false
   let server
@@ -22,7 +22,7 @@ export default function server (opts = {}) {
       build.initialOptions.metafile = true
       server = new Server(build.initialOptions, { ...serverOpts })
 
-      onLoad && onLoad(server)
+      onSetup && onSetup(server)
 
       server.once('opened', () => {
         onStart && onStart(server)

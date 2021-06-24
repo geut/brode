@@ -49,7 +49,7 @@ export class Brode {
       plugins: [
         server({
           logger: false,
-          onStart (server) {
+          onSetup (server) {
             serverInstance = server
           }
         }),

@@ -22,10 +22,10 @@ const readLocalPackageJSON = async () => {
   }
 }
 
-sade('brout', true)
+sade('brout <url>', true)
   .version(packageJSON.version)
   .describe('Run brout')
-  .example("-u http://127.0.0.1:8080 -c 'webpack serve' --target chromium,firefox")
+  .example("http://127.0.0.1:8080 -c 'webpack serve' --target chromium,firefox")
   .example("-c 'webpack serve' --parser 'uvu'")
   .example("-c 'webpack serve' --parser 'tap'")
   .example("-c 'webpack serve' --parser 'tap' --coverage")
@@ -40,10 +40,10 @@ sade('brout', true)
   .option('--fastClose', 'Fast close')
   .option('--pDevtools', 'Enable playwright devtool', false)
   .option('--pArgs', 'Set args for playwright', '')
-  .action(async (opts = {}) => {
+  .action(async (url, opts = {}) => {
     const packageJSON = await readLocalPackageJSON()
 
-    const { url, target, command, parser, fastClose, retries, timeout, coverage, pDevtools = false, pArgs = '' } = opts
+    const { target, command, parser, fastClose, retries, timeout, coverage, pDevtools = false, pArgs = '' } = opts
 
     assert(typeof pArgs === 'string')
 

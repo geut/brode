@@ -86,7 +86,7 @@ function defaultParser ({ target, log }) {
 export class Brout {
   constructor (opts = {}) {
     const {
-      url = 'http://127.0.0.1:8080',
+      url,
       target = 'chromium',
       command,
       parser = defaultParser,
