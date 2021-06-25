@@ -20,7 +20,6 @@
     "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
     "posttest": "npm run lint",
     "lint": "standard",
-    "version": "chan release --allow-yanked ${npm_package_version} && git add .",
     "prepublishOnly": "npm test"
   },
   "dependencies": {
@@ -36,7 +35,6 @@
     "tempy": "^1.0.1"
   },
   "devDependencies": {
-    "@geut/chan": "^2.0.0",
     "budo": "^11.6.4",
     "html-webpack-plugin": "^5.3.1",
     "jest": "^27.0.4",
