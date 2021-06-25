@@ -1,6 +1,6 @@
-import { promises as fs } from 'node:fs'
-import path from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { promises as fs } from 'fs'
+import path from 'path'
+import { fileURLToPath } from 'url'
 
 import { NanoresourcePromise } from 'nanoresource-promise/emitter.js'
 import staticPlugin from 'fastify-static'
@@ -109,11 +109,11 @@ export class Server extends NanoresourcePromise {
     filepath = path.relative(path.resolve(absWorkingDir, outdir), filepath)
 
     if (filepath.startsWith('/')) {
-      return filepath.slice(1)
-    } else if (filepath.startsWith('./')) {
-      return filepath.slice(2)
-    } else {
       return filepath
+    } else if (filepath.startsWith('./')) {
+      return filepath.slice(1)
+    } else {
+      return `/${filepath}`
     }
   }
 
@@ -129,7 +129,7 @@ export class Server extends NanoresourcePromise {
     if (this._static.root) {
       root = Array.isArray(this._static.root) ? this._static.root : [this._static.root]
     } else {
-      root = [path.join(process.cwd(), 'public')]
+      root = [path.join(__dirname, '..', 'public')]
     }
 
     if (write) {
@@ -160,7 +160,7 @@ export class Server extends NanoresourcePromise {
         if (this._onNotFound) return this._onNotFound(request, reply)
       }
 
-      const entryResource = this._files.find(entry => request.url.startsWith(`/${entry.url}`))
+      const entryResource = this._files.find(entry => request.url.startsWith(entry.url))
       if (entryResource) {
         reply.type(mime.lookup(request.url)).send(entryResource.text)
         return
@@ -178,7 +178,6 @@ export class Server extends NanoresourcePromise {
       }
 
       if (this._onNotFound) return this._onNotFound(request, reply)
-      console.log('not found')
       reply.callNotFound()
     })
 

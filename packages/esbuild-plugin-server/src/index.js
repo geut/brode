@@ -44,6 +44,7 @@ export default function server (opts = {}) {
         server.setFiles(Object.keys(metafile.outputs).map(targetPoint => {
           const outputPath = path.resolve(absWorkingDir, targetPoint)
           const file = outputFiles.find(file => file.path === outputPath || file.path === '<stdout>')
+
           return {
             targetPoint,
             path: outputPath,

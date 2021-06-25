@@ -1,4 +1,4 @@
-import assert from 'node:assert'
+import assert from 'assert'
 
 import esbuild from 'esbuild'
 import { readPackageUpAsync } from 'read-pkg-up'
@@ -13,7 +13,9 @@ export class Brode {
   constructor (filepath, opts = {}) {
     assert(filepath)
 
-    const { target, parser = defaultParser, devtools, retries, timeout } = opts
+    const { target, parser = defaultParser, devtools, retries, timeout, cwd = process.cwd() } = opts
+
+    this._filepath = filepath
 
     this._broutOptions = {
       target,
@@ -26,7 +28,7 @@ export class Brode {
       }
     }
 
-    this._filepath = filepath
+    this._cwd = cwd
   }
 
   async run () {
@@ -40,6 +42,8 @@ export class Brode {
     let serverInstance
     await esbuild.build({
       entryPoints: [this._filepath],
+      absWorkingDir: this._cwd,
+      outbase: './',
       write: false,
       platform: 'browser',
       target: ['es2020'],

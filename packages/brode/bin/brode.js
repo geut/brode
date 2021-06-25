@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
-import path from 'node:path'
-import fs from 'node:fs'
-import { fileURLToPath } from 'node:url'
+import path from 'path'
+import fs from 'fs'
+import { fileURLToPath } from 'url'
 import sade from 'sade'
 
 import { Brode } from '../src/index.js'
