@@ -33,11 +33,15 @@ if (typeof scope.$brout !== 'undefined') {
     },
     stat: async filename => {
       return scope.$brout.fs.stat(filename)
-    }
+    },
+    readFileSync: () => {},
+    writeFileSync: () => {}
   }
 
   fs.readFile = toCallback(fs.promises.readFile)
   fs.writeFile = toCallback(fs.promises.writeFile)
+  fs.readFileSync = fs.promises.readFileSync
+  fs.writeFileSync = fs.promises.writeFileSync
 }
 
 module.exports = fs
