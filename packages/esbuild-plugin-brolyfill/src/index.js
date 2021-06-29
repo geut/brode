@@ -7,7 +7,7 @@ const noop = () => true
 
 const require = createRequire(import.meta.url)
 
-const CORE_MODULES = ['buffer', 'crypto', 'console', 'constants', 'events', 'fs', 'module', 'path', 'os', 'url', 'util', 'process', 'timers', 'tty', 'stream', 'zlib']
+const CORE_MODULES = ['assert', 'buffer', 'crypto', 'console', 'constants', 'events', 'fs', 'module', 'path', 'os', 'url', 'util', 'process', 'timers', 'tty', 'stream', 'zlib']
 
 const getModule = (mod, pathname, filter) => {
   const result = filter(mod)

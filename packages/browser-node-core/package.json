@@ -3,6 +3,7 @@
   "version": "2.0.0",
   "description": "Core Node modules for the browser",
   "exports": {
+    "./assert": "./src/assert.js",
     "./buffer": "./src/buffer.js",
     "./crypto": "./src/crypto.js",
     "./console": "./src/console.js",
@@ -35,6 +36,7 @@
     "prepublishOnly": "npm test"
   },
   "dependencies": {
+    "assert-browserify": "npm:assert@^2.0.0",
     "buffer-browserify": "npm:buffer@^6.0.3",
     "console-browserify": "^1.2.0",
     "constants-browserify": "^1.0.0",
