@@ -17,7 +17,7 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "test": "uvu -i fixtures -i webpack.config.js",
     "posttest": "npm run lint",
     "lint": "standard",
     "prepublishOnly": "npm test"
@@ -37,7 +37,6 @@
   "devDependencies": {
     "budo": "^11.6.4",
     "html-webpack-plugin": "^5.3.1",
-    "jest": "^27.0.4",
     "standard": "^16.0.3",
     "uvu": "^0.5.1",
     "webpack": "^5.38.1",
@@ -45,17 +44,10 @@
     "webpack-dev-server": "^3.11.2",
     "zora": "5.0.0-alpha.3"
   },
-  "jest": {
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ],
-    "testTimeout": 10000
-  },
   "standard": {
     "env": [
       "node",
-      "browser",
-      "jest"
+      "browser"
     ]
   },
   "repository": {

@@ -3,7 +3,7 @@ import assert from 'assert'
 import esbuild from 'esbuild'
 import { readPackageUpAsync } from 'read-pkg-up'
 
-import brolyfill from '@geut/esbuild-plugin-brolyfill'
+import brode from '@geut/esbuild-plugin-brode'
 import server from '@geut/esbuild-plugin-server'
 import { Brout } from '@geut/brout'
 
@@ -57,7 +57,7 @@ export class Brode {
             serverInstance = server
           }
         }),
-        brolyfill()
+        brode()
       ]
     })
 

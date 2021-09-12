@@ -1,11 +1,14 @@
+import { test } from 'uvu'
+import * as assert from 'uvu/assert'
+
 import execa from 'execa'
 
 test('basic success hello', async () => {
   const proc = await execa('brode', ['./tests/fixtures/success-hello.js'], {
     preferLocal: true
   })
-  expect(proc.exitCode).toBe(0)
-  expect(proc.stdout).toBe('hello world!')
+  assert.is(proc.exitCode, 0)
+  assert.is(proc.stdout, 'hello world!')
 })
 
 test('basic fail hello', async () => {
@@ -17,6 +20,7 @@ test('basic fail hello', async () => {
   } catch (err) {
     error = err
   }
-
-  expect(error.stderr).toBe('fail!')
+  assert.is(error.stderr, 'fail!')
 })
+
+test.run()

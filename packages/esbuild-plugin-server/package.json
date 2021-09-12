@@ -14,7 +14,7 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "test": "echo 'no test yet'",
     "posttest": "npm run lint",
     "lint": "standard",
     "prepublishOnly": "npm test"
@@ -29,17 +29,10 @@
     "pino-pretty": "^5.0.2"
   },
   "devDependencies": {
-    "jest": "^27.0.4",
     "standard": "^16.0.3"
-  },
-  "jest": {
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ]
   },
   "standard": {
     "env": [
-      "jest",
       "node",
       "browser"
     ]

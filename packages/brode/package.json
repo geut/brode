@@ -16,15 +16,15 @@
     "index.js"
   ],
   "scripts": {
-    "start": "node index.js",
-    "test": "NODE_OPTIONS=--experimental-vm-modules jest --passWithNoTests",
+    "start": "node bin/brode.js",
+    "test": "uvu -i fixtures",
     "posttest": "npm run lint",
     "lint": "standard",
     "prepublishOnly": "npm test"
   },
   "dependencies": {
     "@geut/brout": "^2.0.0",
-    "@geut/esbuild-plugin-brolyfill": "^2.0.0",
+    "@geut/esbuild-plugin-brode": "^2.0.0",
     "@geut/esbuild-plugin-server": "^2.0.0",
     "esbuild": "^0.12.5",
     "fastify": "^3.17.0",
@@ -35,20 +35,11 @@
   },
   "devDependencies": {
     "execa": "^5.1.1",
-    "jest": "^27.0.4",
-    "standard": "^16.0.3"
-  },
-  "jest": {
-    "resolver": "<rootDir>/../../jest-module-resolver.js",
-    "transform": {},
-    "testMatch": [
-      "**/tests/**/*.test.js"
-    ],
-    "testTimeout": 10000
+    "standard": "^16.0.3",
+    "uvu": "^0.5.1"
   },
   "standard": {
     "env": [
-      "jest",
       "node",
       "browser"
     ]

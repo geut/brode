@@ -20,9 +20,10 @@ const PARSERS = {
 }
 
 class Runner {
-  constructor (fastClose = false) {
+  constructor ({ fastClose = false, onError }) {
     this._closed = false
     this._exitError = null
+    this._onError = onError
 
     if (!fastClose) {
       this._done = debounce(this._done.bind(this), 1000)
@@ -40,17 +41,20 @@ class Runner {
     return this._closed
   }
 
-  done (err) {
+  done (err, cb = () => {}) {
     if (this._closed) return
     if (err && !this._exitError) {
       if (err === 1) {
-        err = new Error('runner error')
+        err = new Error('exit 1')
         err.hidden = true
       }
       if (typeof err === 'string') {
         err = new Error(err)
       }
       this._exitError = err
+      if (!err.hidden) {
+        this._onError(err)
+      }
     }
     this._done()
   }
@@ -164,7 +168,12 @@ export class Brout {
     const browser = await playwright[target].launch(this._playwrightOptions)
     this._releases.push(() => browser.close())
 
-    const runner = new Runner(this._fastClose)
+    const runner = new Runner({
+      fastClose: this._fastClose,
+      onError: err => {
+        parse({ type: 'error', args: [err] })
+      }
+    })
 
     const parse = this._parser({
       target,

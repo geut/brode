@@ -1,3 +1,6 @@
+import { test } from 'uvu'
+import * as assert from 'uvu/assert'
+
 import { Brout } from '../src/index.js'
 import tapParser from '../src/parsers/tap.js'
 import uvuParser from '../src/parsers/uvu.js'
@@ -15,8 +18,17 @@ test('basic', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).resolves.toBe(0)
-  expect(logs).toMatchSnapshot()
+  const exit = await brout.run()
+  assert.is(exit, 0)
+  assert.equal(logs, [
+    { type: undefined, content: 'Target: chromium\n' },
+    { type: 'log', content: 'log0' },
+    { type: 'error', content: 'error0' },
+    { type: 'warn', content: 'warn0' },
+    { type: 'stdout', content: 'stdout0' },
+    { type: 'stderr', content: 'stderr0' },
+    { type: 'log', content: 'brout' }
+  ])
 })
 
 test('basic fail', async () => {
@@ -28,8 +40,17 @@ test('basic fail', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).rejects.toThrow('error0')
-  expect(logs).toMatchSnapshot()
+  try {
+    await brout.run()
+    assert.unreachable()
+  } catch (err) {
+    assert.is(err.message, 'error0')
+  }
+
+  assert.equal(logs, [
+    { type: undefined, content: 'Target: chromium\n' },
+    { type: 'error', content: 'Error: error0' }
+  ])
 })
 
 test('tap', async () => {
@@ -42,8 +63,20 @@ test('tap', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).resolves.toBe(0)
-  expect(logs).toMatchSnapshot()
+  const exit = await brout.run()
+  assert.is(exit, 0)
+  assert.equal(logs, [
+    { type: undefined, content: '# target: chromium' },
+    { type: 'log', content: 'TAP version 13' },
+    { type: 'log', content: '# should result to the answer' },
+    { type: 'log', content: 'ok 1 - answer should be 42' },
+    { type: 'log', content: '' },
+    { type: 'log', content: '1..1' },
+    { type: 'log', content: '# tests 1' },
+    { type: 'log', content: '# pass  1' },
+    { type: 'log', content: '# fail  0' },
+    { type: 'log', content: '# skip  0' }
+  ])
 })
 
 test('tap fail', async () => {
@@ -56,8 +89,29 @@ test('tap fail', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).resolves.toBe(1)
-  expect(logs).toMatchSnapshot()
+  const exit = await brout.run()
+  assert.is(exit, 1)
+  assert.equal(logs, [
+    { type: undefined, content: '# target: chromium' },
+    { type: 'log', content: 'TAP version 13' },
+    { type: 'log', content: '# should result to the answer' },
+    { type: 'log', content: 'not ok 1 - answer should be 42' },
+    { type: 'log', content: '  ---' },
+    { type: 'log', content: '    actual: 42' },
+    { type: 'log', content: '    expected: 43' },
+    { type: 'log', content: '    operator: "equal"' },
+    {
+      type: 'log',
+      content: '    at: " eval (webpack-internal:///./tests/fixtures/tap-fail.js:7:5)"'
+    },
+    { type: 'log', content: '  ...' },
+    { type: 'log', content: '' },
+    { type: 'log', content: '1..1' },
+    { type: 'log', content: '# tests 1' },
+    { type: 'log', content: '# pass  0' },
+    { type: 'log', content: '# fail  1' },
+    { type: 'log', content: '# skip  0' }
+  ])
 })
 
 test('uvu', async () => {
@@ -70,8 +124,16 @@ test('uvu', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).resolves.toBe(0)
-  expect(logs.filter(({ content }) => !content.includes('Duration'))).toMatchSnapshot()
+  const exit = await brout.run()
+  assert.is(exit, 0)
+  assert.equal(logs.filter(({ content }) => !content.includes('Duration')), [
+    { type: 'stdout', content: '\x1B[90m• \x1B[39m' },
+    { type: 'stdout', content: '\x1B[32m  (1 / 1)\n\x1B[39m' },
+    { type: 'stdout', content: '\n  Total:     1' },
+    { type: 'stdout', content: '\x1B[32m\n  Passed:    1\x1B[39m' },
+    { type: 'stdout', content: '\n  Skipped:   0' },
+    { type: 'stdout', content: '\n  Target:    chromium\n\n' }
+  ])
 })
 
 test('uvu fail', async () => {
@@ -84,6 +146,33 @@ test('uvu fail', async () => {
     log: logger(logs)
   })
 
-  await expect(brout.run()).resolves.toBe(1)
-  expect(logs.filter(({ content }) => !content.includes('Duration'))).toMatchSnapshot()
+  const exit = await brout.run()
+  assert.is(exit, 1)
+  assert.equal(logs.filter(({ content }) => !content.includes('Duration')), [
+    { type: 'stdout', content: '\x1B[31m✘ \x1B[39m' },
+    { type: 'stdout', content: '\x1B[31m  (0 / 1)\n\x1B[39m' },
+    {
+      type: 'stdout',
+      content: '\n' +
+        '  \x1B[1m\x1B[41m FAIL \x1B[22m\x1B[49m \x1B[2m"\x1B[22m\x1B[31m\x1B[1mMath.sqrt()\x1B[39m\x1B[22m\x1B[2m"\x1B[22m\n' +
+        '    Expected values to be strictly equal:\x1B[3m\x1B[2m  (is)\x1B[23m\x1B[22m\n' +
+        '\n' +
+        '        \x1B[32m++3    \x1B[2m\x1B[3m(Expected)\x1B[22m\x1B[23m\x1B[39m\n' +
+        '        \x1B[31m--2    \x1B[2m\x1B[3m(Actual)\x1B[22m\x1B[23m\x1B[39m\n' +
+        '        \x1B[90m\n' +
+        '    at assert (webpack-internal:///../../node_modules/uvu/assert/index.mjs:48:8)\n' +
+        '    at Module.is (webpack-internal:///../../node_modules/uvu/assert/index.mjs:56:2)\n' +
+        '    at Object.eval [as handler] (webpack-internal:///./tests/fixtures/uvu-fail.js:8:43)\n' +
+        '    at Number.runner (webpack-internal:///../../node_modules/uvu/dist/index.mjs:85:16)\n' +
+        '    at exec (webpack-internal:///../../node_modules/uvu/dist/index.mjs:139:39)\x1B[39m\n' +
+        '\n' +
+        '\n'
+    },
+    { type: 'stdout', content: '\n  Total:     1' },
+    { type: 'stdout', content: '\x1B[31m\n  Passed:    0\x1B[39m' },
+    { type: 'stdout', content: '\n  Skipped:   0' },
+    { type: 'stdout', content: '\n  Target:    chromium\n\n' }
+  ])
 })
+
+test.run()
