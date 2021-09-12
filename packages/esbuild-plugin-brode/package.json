@@ -1,0 +1,56 @@
+{
+  "name": "@geut/esbuild-plugin-brode",
+  "version": "2.0.0",
+  "description": "esbuild plugin to add web polyfills to support node core modules and globals",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "files": [
+    "lib",
+    "src",
+    "bin",
+    "index.js"
+  ],
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo 'no test yet'",
+    "posttest": "npm run lint",
+    "lint": "standard",
+    "prepublishOnly": "npm test"
+  },
+  "peerDependencies": {
+    "esbuild": "^0.12.5"
+  },
+  "dependencies": {
+    "@geut/browser-node-core": "^2.0.0"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
+  },
+  "standard": {
+    "env": [
+      "node",
+      "browser"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geut/brode.git"
+  },
+  "keywords": [
+    "polyfill",
+    "esbuild",
+    "node",
+    "plugin"
+  ],
+  "author": {
+    "name": "GEUT",
+    "email": "contact@geutstudio.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/geut/brode/issues"
+  },
+  "homepage": "https://github.com/geut/brode#readme"
+}
