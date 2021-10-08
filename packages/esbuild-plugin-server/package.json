@@ -54,5 +54,8 @@
   "bugs": {
     "url": "https://github.com/geut/brode/issues"
   },
-  "homepage": "https://github.com/geut/brode#readme"
+  "homepage": "https://github.com/geut/brode#readme",
+  "publishConfig": {
+    "access": "public"
+  }
 }
