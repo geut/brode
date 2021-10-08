@@ -1,7 +1,7 @@
 # brode
 Monorepo project for the polyfill Node.js browser platform: `brode`
 
-[![Build Status](https://github.com/geut/brode/actions?query=test)](https://github.com/geut/brode/workflows/test/badge.svg)
+![Test Status](https://github.com/geut/brode/actions/workflows/test.yml/badge.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![standard-readme compliant](https://img.shields.io/badge/readme%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/RichardLitt/standard-readme)
 
