@@ -29,7 +29,7 @@ sade('brout <url>', true)
   .example("-c 'webpack serve' --parser 'uvu'")
   .example("-c 'webpack serve' --parser 'tap'")
   .example("-c 'webpack serve' --parser 'tap' --coverage")
-  .example("-c 'webpack serve' --parser 'tap' --pDevtools --pAgs='arg0=value,arg1=value'")
+  .example("-c 'webpack serve' --parser 'tap' --devtools --args='arg0=value,arg1=value'")
   .option('-u, --url', 'URL to bind', 'http://127.0.0.1:8080')
   .option('-t, --target', 'Browser target', 'chromium')
   .option('-c, --command', 'Execute a command before start')
@@ -38,14 +38,14 @@ sade('brout <url>', true)
   .option('-T, --timeout', 'Timeout', 0)
   .option('-C, --coverage', 'Add support for istanbul coverage', false)
   .option('--fastClose', 'Fast close')
-  .option('--pDevtools', 'Enable playwright devtool', false)
-  .option('--pArgs', 'Set args for playwright', '')
+  .option('--devtools', 'Enable playwright devtool', false)
+  .option('--args', 'Set args for playwright', '')
   .action(async (url, opts = {}) => {
     const packageJSON = await readLocalPackageJSON()
 
-    const { target, command, parser, fastClose, retries, timeout, coverage, pDevtools = false, pArgs = '' } = opts
+    const { target, command, parser, fastClose, retries, timeout, coverage, devtools = false, args = '' } = opts
 
-    assert(typeof pArgs === 'string')
+    assert(typeof args === 'string')
 
     const brout = new Brout({
       url,
@@ -57,8 +57,8 @@ sade('brout <url>', true)
       coverage,
       command: command && packageJSON && packageJSON.scripts[command] ? `npm run ${command}` : command,
       playwrightOptions: {
-        devtools: pDevtools,
-        args: pArgs.split(',')
+        devtools,
+        args: args.split(',')
       }
     })
 

@@ -1,5 +1,5 @@
 # brode
-A polyfill Node.js browser platform
+Monorepo project for the polyfill Node.js browser platform: `brode`
 
 [![Build Status](https://travis-ci.com/geut/brode.svg?branch=main)](https://travis-ci.com/geut/brode)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -7,82 +7,44 @@ A polyfill Node.js browser platform
 
 [![Made by GEUT][geut-badge]][geut-url]
 
-## Install
+## Intro
 
-```bash
-$ npm install -g @geut/brode
-```
+In Geut we are constantly creating Node.js modules with browser support and when is time to test one of those modules we have to think:
 
-## Usage
+> How I'm going to test a JavaScript module in Chrome/Firefox?
 
-```bash
-$ brode index.js
-```
+That's why we create `brode`.
 
-### Test using uvu
-
-`brode` provides built-in support for `uvu` and `tap` like test runners.
+In principle, `brode` is a command-line tool that allows you to run JavaScript files in the browser on top of a Node.js polyfill environment:
 
 ```javascript
-// test.js
-import { test } from 'uvu';
-import * as assert from 'uvu/assert';
-
-test('Math.sqrt()', () => {
-  assert.is(Math.sqrt(4), 2);
-  assert.is(Math.sqrt(144), 12);
-  assert.is(Math.sqrt(2), Math.SQRT2);
-});
-
-test('JSON', () => {
-  const input = {
-    foo: 'hello',
-    bar: 'world'
-  };
-
-  const output = JSON.stringify(input);
-
-  assert.snapshot(output, `{"foo":"hello","bar":"world"}`);
-  assert.equal(JSON.parse(output), input, 'matches original');
-});
-
-test.run();
+// index.js
+process.stdout.write('hello world')
+process.exit(0)
 ```
 
 ```bash
-$ brode test.js -p uvu --target chromium,firefox
-• •   (2 / 2)
-
-  Total:     2
-  Passed:    2
-  Skipped:   0
-  Duration:  3.00ms
-  Target:    chromium
-
-• •   (2 / 2)
-
-  Total:     2
-  Passed:    2
-  Skipped:   0
-  Duration:  6.00ms
-  Target:    firefox
+$ node index.js
+$ hello world
+$
+$ brode index.js --target firefox
+$ hello world
 ```
 
-### Node.js Stream support
+`brode index.js --target firefox`:
+1. Compiles the `index.js` with [esbuild](https://esbuild.github.io/).
+1. Adds [polyfills](packages/esbuild-plugin-brode/README.md) for every Node.js core module/globals.
+1. Runs the build with [playwright](https://playwright.dev/).
 
-You can use Node.js streams in the browser:
+With this tool you can use test runners like [uvu](https://github.com/lukeed/uvu) to test your modules in Node.js and browsers.
 
-```javascript
-// reader.js
-process.stdin.on('data', data => {
-  console.log(data.toString())
-})
-```
+## Modules
 
-```bash
-$ echo 'hello' | brode reader.js
-hello
-```
+- [brode](packages/brode/README.md): Command-line tool and API for the polyfill Node.js browser platform.
+- [brout](packages/brout/README.md): Command-line tool and API to log the output of JavaScript files using playwright.
+- [browser-node-core](packages/browser-node-core/README.md): Core Node modules for the browser.
+- [esbuild-plugin-brode](packages/esbuild-plugin-brode/README.md): A esbuild plugin to add web polyfills to support node core modules and globals.
+- [esbuild-plugin-server](packages/esbuild-plugin-brode/README.md): A esbuild plugin to run a dev server.
 
 ## Issues
 

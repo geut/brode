@@ -1,7 +1,7 @@
 {
   "name": "@geut/brode",
-  "version": "2.0.0",
-  "description": "Template to create modules following the Geut path",
+  "version": "0.0.1",
+  "description": "A polyfill Node.js browser platform",
   "type": "module",
   "exports": {
     ".": "./src/index.js"
@@ -24,8 +24,8 @@
   },
   "dependencies": {
     "@geut/brout": "^2.0.0",
-    "@geut/esbuild-plugin-brode": "^2.0.0",
-    "@geut/esbuild-plugin-server": "^2.0.0",
+    "@geut/esbuild-plugin-brode": "^0.0.1",
+    "@geut/esbuild-plugin-server": "^0.0.1",
     "esbuild": "^0.12.5",
     "fastify": "^3.17.0",
     "get-port": "^5.1.1",
