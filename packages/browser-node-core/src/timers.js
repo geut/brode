@@ -13,7 +13,7 @@ const registerImmediate = (handle) => {
 }
 
 function nSetImmediate (callback) {
-  if (scope.__EXIT_CODE__ !== null) return
+  if (scope.__EXIT_CODE__ !== undefined) return
 
   // Callback can either be a function or a string
   if (typeof callback !== 'function') {
@@ -100,13 +100,13 @@ class Timeout {
 }
 
 function nSetTimeout (...args) {
-  if (scope.__EXIT_CODE__ !== null) return
+  if (scope.__EXIT_CODE__ !== undefined) return
 
   return new Timeout(scope.setTimeout(...args), scope.clearTimeout, scope)
 }
 
 function nSetInterval (...args) {
-  if (scope.__EXIT_CODE__ !== null) return
+  if (scope.__EXIT_CODE__ !== undefined) return
 
   return new Timeout(scope.setInterval(...args), scope.setInterval, scope)
 }
