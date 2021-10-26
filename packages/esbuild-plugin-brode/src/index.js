@@ -49,7 +49,7 @@ export default function brolyfill (opts = {}) {
     injectGlogal = true,
     environmentsFilter = noop,
     modulesFilter = noop,
-    injectDirname = true
+    dirnameFilter = noop
   } = opts
 
   return {
@@ -61,7 +61,7 @@ export default function brolyfill (opts = {}) {
       options.define = { ...define, ...defaultDefine }
       options.inject = [...inject, ...defaultInject]
       alias(build, modules)
-      dirname(build, injectDirname)
+      dirname(build, dirnameFilter)
     }
   }
 }

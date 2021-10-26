@@ -23,6 +23,7 @@ sade('brode <filepath>', true)
   .option('-d, --devtools', 'Enable devtool', false)
   .option('-r, --retries', 'Retries', 5)
   .option('-T, --timeout', 'Timeout', 0)
+  .option('--args', 'Set args for playwright', '')
   .action(async (filepath, opts = {}) => {
     const brode = new Brode(filepath, opts)
 

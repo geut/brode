@@ -1,4 +1,8 @@
-const crypto = require('crypto-browserify')
-const getScope = require('./scope.js')
+import crypto from './esm/crypto-browserify.js'
+import getScope from './scope.js'
+
+export * from './esm/crypto-browserify.js'
+
 crypto.WebCrypto = getScope().crypto
-module.exports = crypto
+export const WebCrypto = crypto.WebCrypto
+export default crypto
