@@ -1,13 +1,13 @@
 import { promises as fs } from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
-import { createRequire } from 'module'
 
 import { NanoresourcePromise } from 'nanoresource-promise/emitter.js'
 import staticPlugin from 'fastify-static'
 import mime from 'mime-types'
 import fastify from 'fastify'
 import getPort from 'get-port'
+import { findUp } from 'find-up'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -126,8 +126,6 @@ export class Server extends NanoresourcePromise {
   async _open () {
     const { outdir, write, absWorkingDir } = this.buildPaths
 
-    const require = createRequire(path.join(absWorkingDir, 'index.js'))
-
     let root
     if (this._static.root) {
       root = Array.isArray(this._static.root) ? this._static.root : [this._static.root]
@@ -156,7 +154,15 @@ export class Server extends NanoresourcePromise {
 
     this._fastify.get('/web_modules/*', async (request, reply) => {
       const modulePaths = request.params['*'].split('/')
-      const resourcePath = path.join(path.dirname(require.resolve(modulePaths[0])), modulePaths.slice(1).join('/'))
+
+      const pkgPath = await findUp(`node_modules/${modulePaths[0]}`, {
+        cwd: path.join(absWorkingDir, 'index.js'),
+        type: 'directory'
+      })
+
+      const destPath = modulePaths.slice(1).join('/')
+
+      const resourcePath = path.join(pkgPath, destPath)
       const file = await fs.readFile(resourcePath).catch(() => {})
       if (file) {
         reply.type(mime.lookup(resourcePath)).send(file)

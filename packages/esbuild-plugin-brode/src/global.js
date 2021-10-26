@@ -5,3 +5,4 @@ import proc from '@geut/browser-node-core/process'
 export const Buffer = Buf
 export const process = proc
 export { setTimeout, clearTimeout, setInterval, clearInterval, setImmediate, clearImmediate }
+export const global = globalThis

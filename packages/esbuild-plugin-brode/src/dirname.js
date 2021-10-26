@@ -17,7 +17,10 @@ export default (build, dirnameFilter = () => false) => {
     if (isNodeModule) {
       filepath = `/web_modules/${args.path.split('/node_modules/').pop()}`
     } else {
-      filepath = path.relative(absWorkingDir, args.path)
+      filepath = args.path.replace(absWorkingDir, '')
+      if (!filepath.startsWith('/')) {
+        filepath = `/${filepath}`
+      }
     }
 
     // eslint-disable-next-line no-template-curly-in-string

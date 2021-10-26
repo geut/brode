@@ -61,7 +61,10 @@ function alias () {
     bundle: true,
     format: 'esm',
     platform: 'browser',
-    plugins: [alias()]
+    plugins: [alias()],
+    define: {
+      global: 'globalThis'
+    }
   }).catch(() => process.exit(1))
 
   await cpy(path.join(webModulesPath, 'common'), 'src/esm/common')

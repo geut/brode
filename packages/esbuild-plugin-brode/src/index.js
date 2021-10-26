@@ -25,6 +25,8 @@ function buildOptions ({ injectGlogal, environmentsFilter, modulesFilter }) {
     define[key] = typeof result === 'string' ? result : JSON.stringify(process.env[env])
   }
 
+  define['process.argv'] = JSON.stringify(process.argv)
+
   const inject = [
     getModule('global', require.resolve('./global.js'), () => injectGlogal)
   ].filter(Boolean)
