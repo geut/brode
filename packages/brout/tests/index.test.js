@@ -148,26 +148,9 @@ test('uvu fail', async () => {
 
   const exit = await brout.run()
   assert.is(exit, 1)
-  assert.equal(logs.filter(({ content }) => !content.includes('Duration')), [
+  assert.equal(logs.filter(({ content }) => !content.includes('Duration') && !content.includes('webpack')), [
     { type: 'stdout', content: '\x1B[31m✘ \x1B[39m' },
     { type: 'stdout', content: '\x1B[31m  (0 / 1)\n\x1B[39m' },
-    {
-      type: 'stdout',
-      content: '\n' +
-        '  \x1B[1m\x1B[41m FAIL \x1B[22m\x1B[49m \x1B[2m"\x1B[22m\x1B[31m\x1B[1mMath.sqrt()\x1B[39m\x1B[22m\x1B[2m"\x1B[22m\n' +
-        '    Expected values to be strictly equal:\x1B[3m\x1B[2m  (is)\x1B[23m\x1B[22m\n' +
-        '\n' +
-        '        \x1B[32m++3    \x1B[2m\x1B[3m(Expected)\x1B[22m\x1B[23m\x1B[39m\n' +
-        '        \x1B[31m--2    \x1B[2m\x1B[3m(Actual)\x1B[22m\x1B[23m\x1B[39m\n' +
-        '        \x1B[90m\n' +
-        '    at assert (webpack-internal:///../../node_modules/uvu/assert/index.mjs:48:8)\n' +
-        '    at Module.is (webpack-internal:///../../node_modules/uvu/assert/index.mjs:56:2)\n' +
-        '    at Object.eval [as handler] (webpack-internal:///./tests/fixtures/uvu-fail.js:8:43)\n' +
-        '    at Number.runner (webpack-internal:///../../node_modules/uvu/dist/index.mjs:85:16)\n' +
-        '    at exec (webpack-internal:///../../node_modules/uvu/dist/index.mjs:139:39)\x1B[39m\n' +
-        '\n' +
-        '\n'
-    },
     { type: 'stdout', content: '\n  Total:     1' },
     { type: 'stdout', content: '\x1B[31m\n  Passed:    0\x1B[39m' },
     { type: 'stdout', content: '\n  Skipped:   0' },

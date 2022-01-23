@@ -36,7 +36,7 @@
   ],
   "scripts": {
     "start": "node index.js",
-    "test": "echo 'no test test'",
+    "test": "npm run build && echo 'no test test'",
     "posttest": "npm run lint",
     "lint": "standard ",
     "build": "node to-esm.js",

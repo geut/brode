@@ -1,13 +1,17 @@
 import assert from 'assert'
+// import util from 'util'
 
 import esbuild from 'esbuild'
 import { readPackageUpAsync } from 'read-pkg-up'
+// import pem from 'pem'
 
 import brode from '@geut/esbuild-plugin-brode'
 import server from '@geut/esbuild-plugin-server'
 import { Brout } from '@geut/brout'
 
 const defaultParser = ({ log }) => opts => log(opts)
+
+// const createCertificate = util.promisify(pem.createCertificate)
 
 export class Brode {
   constructor (filepath, opts = {}) {
@@ -24,7 +28,7 @@ export class Brode {
       timeout,
       playwrightOptions: {
         devtools,
-        args: ['--autoplay-policy=no-user-gesture-required', ...args.split(',')]
+        args: ['--autoplay-policy=no-user-gesture-required', '--ignore-https-errors', '--ignore-certificate-errors', ...args.split(',')]
       }
     }
 
@@ -38,6 +42,8 @@ export class Brode {
     if ((packageJson && packageJson.type === 'module' && !this._filepath.endsWith('.cjs')) || this._filepath.endsWith('.mjs')) {
       format = 'esm'
     }
+
+    // const keys = await createCertificate({ days: 1, selfSigned: true })
 
     let serverInstance
     await esbuild.build({
@@ -57,6 +63,10 @@ export class Brode {
           onSetup (server) {
             serverInstance = server
           }
+          // https: {
+          //   cert: keys.certificate,
+          //   key: keys.serviceKey
+          // }
         }),
         brode({
           dirnameFilter: () => true

@@ -15,7 +15,7 @@ export class Server extends NanoresourcePromise {
   constructor (esbuildOptions, opts = {}) {
     super()
 
-    const { port = 3000, host = '127.0.0.1', https = false, template = path.resolve(__dirname, '../static/index.html'), onNotFound, logger = true, ...staticOptions } = opts
+    const { port = 3000, host = '127.0.0.1', https, template = path.resolve(__dirname, '../static/index.html'), onNotFound, logger = true, ...staticOptions } = opts
 
     this._esbuildOptions = esbuildOptions
     this._files = []
@@ -27,7 +27,8 @@ export class Server extends NanoresourcePromise {
     this._onNotFound = onNotFound
 
     this._fastify = fastify({
-      logger: logger && ({ prettyPrint: true, ...(typeof logger === 'object' ? logger : {}) })
+      logger: logger && ({ prettyPrint: true, ...(typeof logger === 'object' ? logger : {}) }),
+      https
     })
   }
 
