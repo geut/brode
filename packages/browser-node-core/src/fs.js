@@ -1,8 +1,6 @@
-const getScope = require('./scope.js')
+import getScope from './scope.js'
 
 const scope = getScope()
-
-const fs = {}
 
 function toCallback (runPromise) {
   return (...args) => {
@@ -14,34 +12,38 @@ function toCallback (runPromise) {
   }
 }
 
-if (typeof scope.$brout !== 'undefined') {
-  fs.promises = {
-    readFile: async (filename, enc = 'binary') => {
-      let result = await scope.$brout.fs.readFile(filename)
-      if (enc === 'base64') return result
-      result = Buffer.from(result, 'base64')
-      if (enc === 'binary') return result
-      return result.toString(enc)
-    },
-    writeFile: async (filename, content) => {
-      let isBuffer = false
-      if (Buffer.isBuffer(content)) {
-        content = content.toString('base64')
-        isBuffer = true
-      }
-      return scope.$brout.fs.writeFile(filename, content, isBuffer)
-    },
-    stat: async filename => {
-      return scope.$brout.fs.stat(filename)
-    },
-    readFileSync: () => {},
-    writeFileSync: () => {}
+export const promises = {
+  readFile: async (filename, enc = 'binary') => {
+    if (typeof scope.$brout === 'undefined') return
+    let result = await scope.$brout.fs.readFile(filename)
+    if (enc === 'base64') return result
+    result = Buffer.from(result, 'base64')
+    if (enc === 'binary') return result
+    return result.toString(enc)
+  },
+  writeFile: async (filename, content) => {
+    if (typeof scope.$brout === 'undefined') return
+    let isBuffer = false
+    if (Buffer.isBuffer(content)) {
+      content = content.toString('base64')
+      isBuffer = true
+    }
+    return scope.$brout.fs.writeFile(filename, content, isBuffer)
+  },
+  stat: async filename => {
+    if (typeof scope.$brout === 'undefined') return
+    return scope.$brout.fs.stat(filename)
   }
-
-  fs.readFile = toCallback(fs.promises.readFile)
-  fs.writeFile = toCallback(fs.promises.writeFile)
-  fs.readFileSync = fs.promises.readFileSync
-  fs.writeFileSync = fs.promises.writeFileSync
 }
 
-module.exports = fs
+export const readFile = toCallback(promises.readFile)
+export const writeFile = toCallback(promises.writeFile)
+export const readFileSync = () => {}
+export const writeFileSync = () => {}
+
+export default {
+  readFile,
+  writeFile,
+  readFileSync,
+  writeFileSync
+}

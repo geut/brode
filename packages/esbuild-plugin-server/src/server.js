@@ -7,6 +7,7 @@ import staticPlugin from 'fastify-static'
 import mime from 'mime-types'
 import fastify from 'fastify'
 import getPort from 'get-port'
+import { findUp } from 'find-up'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -151,7 +152,29 @@ export class Server extends NanoresourcePromise {
       reply.type(mime.lookup('.html')).send(html)
     })
 
+    this._fastify.get('/web_modules/*', async (request, reply) => {
+      const modulePaths = request.params['*'].split('/')
+
+      const pkgPath = await findUp(`node_modules/${modulePaths[0]}`, {
+        cwd: path.join(absWorkingDir, 'index.js'),
+        type: 'directory'
+      })
+
+      const destPath = modulePaths.slice(1).join('/')
+
+      const resourcePath = path.join(pkgPath, destPath)
+      const file = await fs.readFile(resourcePath).catch(() => {})
+      if (file) {
+        reply.type(mime.lookup(resourcePath)).send(file)
+        return
+      }
+
+      if (this._onNotFound) return this._onNotFound(request, reply)
+      reply.callNotFound()
+    })
+
     this._fastify.setNotFoundHandler(async (request, reply) => {
+      // console.log('entra', request.url)
       if (request.url.includes('favicon.ico')) {
         return fs.readFile(path.resolve(__dirname, '../static/favicon.ico'))
       }
@@ -171,7 +194,9 @@ export class Server extends NanoresourcePromise {
         resource = resource.slice(1)
       }
 
-      const file = await fs.readFile(path.resolve(absWorkingDir, resource)).catch(() => {})
+      const resourcePath = path.resolve(absWorkingDir, resource)
+
+      const file = await fs.readFile(resourcePath).catch(() => {})
       if (file) {
         reply.type(mime.lookup(resource)).send(file)
         return

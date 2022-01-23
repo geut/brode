@@ -2,26 +2,32 @@
   "name": "@geut/browser-node-core",
   "version": "1.0.0",
   "description": "Core Node modules for the browser",
+  "type": "module",
   "exports": {
+    "./supported-modules": "./src/supported-modules.js",
     "./assert": "./src/assert.js",
     "./buffer": "./src/buffer.js",
-    "./crypto": "./src/crypto.js",
     "./console": "./src/console.js",
     "./constants": "./src/constants.js",
+    "./crypto": "./src/crypto.js",
     "./events": "./src/events.js",
     "./fs": "./src/fs.js",
+    "./module": "./src/module.js",
     "./global": "./src/global.js",
-    "./path": "./src/path.js",
-    "./module": "./src/empty.js",
     "./os": "./src/os.js",
-    "./url": "./src/url.js",
-    "./util": "./src/util.js",
+    "./path": "./src/path.js",
     "./process": "./src/process.js",
+    "./querystring": "./src/querystring.js",
+    "./stream": "./src/stream.js",
+    "./string_decoder": "./src/string_decoder.js",
     "./timers": "./src/timers.js",
     "./tty": "./src/tty.js",
-    "./stream": "./src/stream.js",
-    "./zlib": "./src/zlib.js"
+    "./url": "./src/url.js",
+    "./util": "./src/util.js",
+    "./zlib": "./src/zlib.js",
+    "./scope": "./src/scope.js"
   },
+  "sideEffects": false,
   "files": [
     "lib",
     "src",
@@ -32,30 +38,36 @@
     "start": "node index.js",
     "test": "echo 'no test test'",
     "posttest": "npm run lint",
-    "lint": "standard",
-    "prepublishOnly": "npm test"
-  },
-  "dependencies": {
-    "assert-browserify": "npm:assert@^2.0.0",
-    "buffer-browserify": "npm:buffer@^6.0.3",
-    "console-browserify": "^1.2.0",
-    "constants-browserify": "^1.0.0",
-    "cpus": "^1.0.3",
-    "crypto-browserify": "^3.12.0",
-    "eventemitter2": "^6.4.4",
-    "fflate": "^0.7.0",
-    "native-url": "^0.3.4",
-    "path-browserify": "^1.0.1",
-    "readable-stream": "^3.6.0",
-    "util-browserify": "npm:util@^0.12.4"
+    "lint": "standard ",
+    "build": "node to-esm.js",
+    "prepublishOnly": "npm run build && npm test"
   },
   "devDependencies": {
-    "standard": "^16.0.3"
+    "assert-browserify": "^2.0.0",
+    "buffer-browserify": "npm:buffer@^6.0.3",
+    "cpus": "^1.0.3",
+    "cpy": "^8.1.2",
+    "crypto-browserify": "^3.12.0",
+    "del": "^6.0.0",
+    "esbuild": "^0.13.8",
+    "esinstall": "^1.1.7",
+    "eventemitter2": "^6.4.4",
+    "fflate": "^0.7.0",
+    "lodash.trim": "^4.5.1",
+    "native-url": "^0.3.4",
+    "path-browserify": "^1.0.1",
+    "querystring-browserify": "npm:querystring@^0.2.0",
+    "standard": "^16.0.3",
+    "util-browserify": "npm:util@^0.12.4",
+    "vite-compatible-readable-stream": "^3.6.0"
   },
   "standard": {
     "env": [
       "node",
       "browser"
+    ],
+    "ignore": [
+      "src/esm/**/*.js"
     ]
   },
   "repository": {

@@ -1,43 +1,60 @@
 /* global performance */
-const cpus = require('cpus')
+import cpus from 'cpus'
 
-module.exports = {
+export { cpus }
+
+export const loadavg = () => [0, 0, 0]
+
+export const hostname = () => {
+  if (typeof location !== 'undefined') {
+    return location.hostname
+  } else return ''
+}
+
+export const release = () => {
+  if (typeof navigator !== 'undefined') {
+    return navigator.appVersion
+  }
+  return ''
+}
+
+export const userInfo = () => ({
+  uid: 1000,
+  gid: 1000,
+  username: 'brode',
+  homedir: '/home/brode',
+  shell: '/bin/bash'
+})
+
+export const endianness = () => 'LE'
+export const uptime = () => Date.now()
+export const type = () => 'Browser'
+export const networkInterfaces = () => ({})
+export const getNetworkInterfaces = () => ({})
+export const arch = () => 'javascript'
+export const platform = () => 'browser'
+export const tmpdir = () => '/tmp'
+export const EOL = '\n'
+export const homedir = () => '/'
+export const totalmem = () => typeof performance !== 'undefined' ? performance.memory.totalJSHeapSize : Number.MAX_VALUE
+export const freemem = () => typeof performance !== 'undefined' ? performance.memory.totalJSHeapSize - performance.memory.usedJSHeapSize : Number.MAX_VALUE
+
+export default {
   cpus,
-
-  loadavg: () => [0, 0, 0],
-
-  hostname: () => {
-    if (typeof location !== 'undefined') {
-      return location.hostname
-    } else return ''
-  },
-
-  release: () => {
-    if (typeof navigator !== 'undefined') {
-      return navigator.appVersion
-    }
-    return ''
-  },
-
-  userInfo: () => ({
-    uid: 1000,
-    gid: 1000,
-    username: 'brode',
-    homedir: '/home/brode',
-    shell: '/bin/bash'
-  }),
-
-  endianness: () => 'LE',
-  uptime: () => Date.now(),
-  type: () => 'Browser',
-  networkInterfaces: () => ({}),
-  getNetworkInterfaces: () => ({}),
-  arch: () => 'javascript',
-  platform: () => 'browser',
-  tmpdir: () => '/tmp',
-  tmpDir: () => '/tmp',
-  EOL: '\n',
-  homedir: () => '/',
-  totalmem: () => performance ? performance.memory.totalJSHeapSize : Number.MAX_VALUE,
-  freemem: () => performance ? performance.memory.totalJSHeapSize - performance.memory.usedJSHeapSize : Number.MAX_VALUE
+  loadavg,
+  hostname,
+  release,
+  userInfo,
+  endianness,
+  uptime,
+  type,
+  networkInterfaces,
+  getNetworkInterfaces,
+  arch,
+  platform,
+  tmpdir,
+  EOL,
+  homedir,
+  totalmem,
+  freemem
 }

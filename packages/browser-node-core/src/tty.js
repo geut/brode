@@ -3,15 +3,10 @@
  * based on: https://github.com/jvilk/bfs-process/blob/master/ts/tty.ts
  */
 
-const { Writable, Readable } = require('stream')
+import { Writable, Readable } from './stream.js'
+import getScope from './scope.js'
 
-const getGlobal = function () {
-  if (typeof self !== 'undefined') { return self }
-  if (typeof window !== 'undefined') { return window }
-  throw new Error('unable to locate global object')
-}
-
-const scope = getGlobal()
+const scope = getScope()
 
 const BROUT_ENABLED = typeof scope.$brout !== 'undefined'
 
@@ -107,10 +102,14 @@ class WritableStream extends Writable {
   }
 }
 
-module.exports = {
-  isatty (fd) {
-    return fd && (fd instanceof ReadableStream || fd instanceof WritableStream)
-  },
+export const isatty = (fd) => {
+  return fd && (fd instanceof ReadableStream || fd instanceof WritableStream)
+}
+
+export { WritableStream, ReadableStream }
+
+export default {
+  isatty,
   WritableStream,
   ReadableStream
 }

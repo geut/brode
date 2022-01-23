@@ -25,6 +25,8 @@ function buildOptions ({ injectGlogal, environmentsFilter, modulesFilter }) {
     define[key] = typeof result === 'string' ? result : JSON.stringify(process.env[env])
   }
 
+  define['process.argv'] = JSON.stringify(process.argv)
+
   const inject = [
     getModule('global', require.resolve('./global.js'), () => injectGlogal)
   ].filter(Boolean)
@@ -49,7 +51,7 @@ export default function brolyfill (opts = {}) {
     injectGlogal = true,
     environmentsFilter = noop,
     modulesFilter = noop,
-    injectDirname = true
+    dirnameFilter = noop
   } = opts
 
   return {
@@ -61,7 +63,7 @@ export default function brolyfill (opts = {}) {
       options.define = { ...define, ...defaultDefine }
       options.inject = [...inject, ...defaultInject]
       alias(build, modules)
-      dirname(build, injectDirname)
+      dirname(build, dirnameFilter)
     }
   }
 }

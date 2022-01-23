@@ -1,8 +1,8 @@
 
-const timers = require('./timers.js')
-const { Buffer } = require('./buffer.js')
-const process = require('./process.js')
-const getScope = require('./scope.js')
+import timers from './timers.js'
+import { Buffer } from './buffer.js'
+import process from './process.js'
+import getScope from './scope.js'
 
 const globalObj = {
   Buffer,
@@ -15,7 +15,7 @@ const globalObj = {
   clearImmediate: timers.clearImmediate
 }
 
-module.exports = new Proxy(getScope(), {
+export default new Proxy(getScope(), {
   get (target, name) {
     if (globalObj[name]) return globalObj[name]
     return target[name]

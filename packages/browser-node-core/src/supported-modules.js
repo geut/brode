@@ -1,0 +1,21 @@
+export default [
+  'assert',
+  'buffer',
+  'console',
+  'constants',
+  'crypto',
+  'events',
+  'fs',
+  'module',
+  'os',
+  'path',
+  'process',
+  'querystring',
+  'stream',
+  'string_decoder',
+  'timers',
+  'tty',
+  'url',
+  'util',
+  'zlib'
+]

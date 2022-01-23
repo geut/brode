@@ -1,5 +1,5 @@
-const EventEmitter = require('eventemitter2')
-const getScope = require('./scope.js')
+import { EventEmitter } from './events.js'
+import getScope from './scope.js'
 
 const scope = getScope()
 
@@ -90,6 +90,7 @@ class Process extends EventEmitter {
 
   exit (code) {
     this.exitCode = code
+    scope.__EXIT_CODE__ = code
     this.emit('exit', [code])
     if (BROUT_ENABLED) {
       scope.$brout.process.exit(code)
@@ -200,4 +201,5 @@ class Process extends EventEmitter {
   }
 }
 
-module.exports = new Process()
+const p = new Process()
+export default p

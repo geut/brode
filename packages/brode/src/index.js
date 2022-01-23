@@ -13,7 +13,7 @@ export class Brode {
   constructor (filepath, opts = {}) {
     assert(filepath)
 
-    const { target, parser = defaultParser, devtools, retries, timeout, cwd = process.cwd() } = opts
+    const { target, parser = defaultParser, devtools, retries, timeout, cwd = process.cwd(), args = '' } = opts
 
     this._filepath = filepath
 
@@ -24,7 +24,7 @@ export class Brode {
       timeout,
       playwrightOptions: {
         devtools,
-        args: ['--autoplay-policy=no-user-gesture-required']
+        args: ['--autoplay-policy=no-user-gesture-required', ...args.split(',')]
       }
     }
 
@@ -47,6 +47,7 @@ export class Brode {
       write: false,
       platform: 'browser',
       target: ['es2020'],
+      treeShaking: true,
       bundle: true,
       format,
       sourcemap: true,
@@ -57,7 +58,9 @@ export class Brode {
             serverInstance = server
           }
         }),
-        brode()
+        brode({
+          dirnameFilter: () => true
+        })
       ]
     })
 

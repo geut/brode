@@ -1,7 +1,10 @@
-const url = require('native-url')
+import getScope from './scope.js'
+import url from './esm/native-url.js'
 
-const scope = (typeof self !== 'undefined' && self) || window
+const scope = getScope()
 
 url.URL = scope.URL
 
-module.exports = url
+export const URL = url.URL
+export * from './esm/native-url.js'
+export default url

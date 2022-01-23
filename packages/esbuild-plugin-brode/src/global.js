@@ -1,18 +1,8 @@
-import globalObj from '@geut/browser-node-core/global'
+import { setTimeout, clearTimeout, setInterval, clearInterval, setImmediate, clearImmediate } from '@geut/browser-node-core/timers'
+import { Buffer as Buf } from '@geut/browser-node-core/buffer'
+import proc from '@geut/browser-node-core/process'
 
-export const global = globalObj
-
-export const globalThis = globalObj
-
-export const Buffer = globalObj.Buffer
-
-export const process = globalObj.process
-
-export const setTimeout = globalObj.setTimeout
-export const clearTimeout = globalObj.clearTimeout
-
-export const setInterval = globalObj.setInterval
-export const clearInterval = globalObj.clearInterval
-
-export const setImmediate = globalObj.setImmediate
-export const clearImmediate = globalObj.clearImmediate
+export const Buffer = Buf
+export const process = proc
+export { setTimeout, clearTimeout, setInterval, clearInterval, setImmediate, clearImmediate }
+export const global = globalThis
