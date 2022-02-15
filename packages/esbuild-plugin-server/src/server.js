@@ -7,7 +7,6 @@ import staticPlugin from 'fastify-static'
 import mime from 'mime-types'
 import fastify from 'fastify'
 import getPort from 'get-port'
-import { findUp } from 'find-up'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
@@ -15,20 +14,19 @@ export class Server extends NanoresourcePromise {
   constructor (esbuildOptions, opts = {}) {
     super()
 
-    const { port = 3000, host = '127.0.0.1', https, template = path.resolve(__dirname, '../static/index.html'), onNotFound, logger = true, ...staticOptions } = opts
+    const { port = 3000, host = '127.0.0.1', https = false, template = path.resolve(__dirname, '../static/index.html'), onNotFound, logger = true, paths } = opts
 
     this._esbuildOptions = esbuildOptions
     this._files = []
     this._port = port
     this._host = host
     this._https = https
-    this._static = staticOptions
+    this._paths = paths
     this._template = template
     this._onNotFound = onNotFound
 
     this._fastify = fastify({
-      logger: logger && ({ prettyPrint: true, ...(typeof logger === 'object' ? logger : {}) }),
-      https
+      logger: logger && ({ prettyPrint: true, ...(typeof logger === 'object' ? logger : {}) })
     })
   }
 
@@ -125,24 +123,13 @@ export class Server extends NanoresourcePromise {
   }
 
   async _open () {
-    const { outdir, write, absWorkingDir } = this.buildPaths
+    const { write, absWorkingDir } = this.buildPaths
 
-    let root
-    if (this._static.root) {
-      root = Array.isArray(this._static.root) ? this._static.root : [this._static.root]
-    } else {
-      root = [path.join(__dirname, '..', 'public')]
+    if (this._paths) {
+      this._paths.forEach(pathOpts => {
+        this._fastify.register(staticPlugin, pathOpts)
+      })
     }
-
-    if (write) {
-      root.push(outdir)
-    }
-
-    this._fastify.register(staticPlugin, {
-      ...this._static,
-      root,
-      prefix: '/'
-    })
 
     const { format = 'iife' } = this._esbuildOptions
 
@@ -153,29 +140,7 @@ export class Server extends NanoresourcePromise {
       reply.type(mime.lookup('.html')).send(html)
     })
 
-    this._fastify.get('/web_modules/*', async (request, reply) => {
-      const modulePaths = request.params['*'].split('/')
-
-      const pkgPath = await findUp(`node_modules/${modulePaths[0]}`, {
-        cwd: path.join(absWorkingDir, 'index.js'),
-        type: 'directory'
-      })
-
-      const destPath = modulePaths.slice(1).join('/')
-
-      const resourcePath = path.join(pkgPath, destPath)
-      const file = await fs.readFile(resourcePath).catch(() => {})
-      if (file) {
-        reply.type(mime.lookup(resourcePath)).send(file)
-        return
-      }
-
-      if (this._onNotFound) return this._onNotFound(request, reply)
-      reply.callNotFound()
-    })
-
     this._fastify.setNotFoundHandler(async (request, reply) => {
-      // console.log('entra', request.url)
       if (request.url.includes('favicon.ico')) {
         return fs.readFile(path.resolve(__dirname, '../static/favicon.ico'))
       }
@@ -195,9 +160,7 @@ export class Server extends NanoresourcePromise {
         resource = resource.slice(1)
       }
 
-      const resourcePath = path.resolve(absWorkingDir, resource)
-
-      const file = await fs.readFile(resourcePath).catch(() => {})
+      const file = await fs.readFile(path.resolve(absWorkingDir, resource)).catch(() => {})
       if (file) {
         reply.type(mime.lookup(resource)).send(file)
         return
