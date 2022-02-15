@@ -84,11 +84,11 @@ class Process extends EventEmitter {
     return this._stdin
   }
 
-  listenerCount (eventName) {
+  listenerCount = (eventName) => {
     return this.listeners(eventName).length
   }
 
-  exit (code) {
+  exit = (code) => {
     this.exitCode = code
     scope.__EXIT_CODE__ = code
     this.emit('exit', [code])
@@ -101,23 +101,23 @@ class Process extends EventEmitter {
     }
   }
 
-  setUncaughtExceptionCaptureCallback (cb) {
+  setUncaughtExceptionCaptureCallback = (cb) => {
     this._errorCallback = cb
   }
 
-  hasUncaughtExceptionCaptureCallback () {
+  hasUncaughtExceptionCaptureCallback = () => {
     return this._errorCallback !== null
   }
 
-  cwd () {
+  cwd = () => {
     return this._cwd
   }
 
-  uptime () {
+  uptime = () => {
     return Math.floor((Date.now() - this._startTime) / 1000)
   }
 
-  memoryUsage () {
+  memoryUsage = () => {
     if (!performance && !performance.memory) {
       return {
         rss: 0,
@@ -137,7 +137,7 @@ class Process extends EventEmitter {
     }
   }
 
-  nextTick (handler, ...args) {
+  nextTick = (handler, ...args) => {
     if (this.exitCode !== null) return
 
     if (typeof handler !== 'function') {
