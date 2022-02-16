@@ -60,6 +60,14 @@ class Process extends EventEmitter {
     this._cwd = BROUT_ENABLED ? scope.$brout.process.cwd : '/'
 
     this._initEvents()
+    this.listenerCount = this.listenerCount.bind(this)
+    this.exit = this.exit.bind(this)
+    this.setUncaughtExceptionCaptureCallback = this.setUncaughtExceptionCaptureCallback.bind(this)
+    this.hasUncaughtExceptionCaptureCallback = this.hasUncaughtExceptionCaptureCallback.bind(this)
+    this.cwd = this.cwd.bind(this)
+    this.uptime = this.uptime.bind(this)
+    this.memoryUsage = this.memoryUsage.bind(this)
+    this.nextTick = this.nextTick.bind(this)
   }
 
   get stdout () {
@@ -84,11 +92,13 @@ class Process extends EventEmitter {
     return this._stdin
   }
 
-  listenerCount = (eventName) => {
+  listenerCount (eventName) {
     return this.listeners(eventName).length
   }
 
-  exit = (code) => {
+  exit (code) {
+    if (this.exitCode) return
+
     this.exitCode = code
     scope.__EXIT_CODE__ = code
     this.emit('exit', [code])
@@ -101,23 +111,23 @@ class Process extends EventEmitter {
     }
   }
 
-  setUncaughtExceptionCaptureCallback = (cb) => {
+  setUncaughtExceptionCaptureCallback (cb) {
     this._errorCallback = cb
   }
 
-  hasUncaughtExceptionCaptureCallback = () => {
+  hasUncaughtExceptionCaptureCallback () {
     return this._errorCallback !== null
   }
 
-  cwd = () => {
+  cwd () {
     return this._cwd
   }
 
-  uptime = () => {
+  uptime () {
     return Math.floor((Date.now() - this._startTime) / 1000)
   }
 
-  memoryUsage = () => {
+  memoryUsage () {
     if (!performance && !performance.memory) {
       return {
         rss: 0,
@@ -137,7 +147,7 @@ class Process extends EventEmitter {
     }
   }
 
-  nextTick = (handler, ...args) => {
+  nextTick (handler, ...args) {
     if (this.exitCode !== null) return
 
     if (typeof handler !== 'function') {
