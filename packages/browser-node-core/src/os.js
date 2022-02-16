@@ -1,5 +1,5 @@
 /* global performance */
-import cpus from 'cpus'
+import cpus from './esm/cpus.js'
 
 export { cpus }
 
