@@ -1,6 +1,6 @@
 {
   "name": "@geut/browser-node-core",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Core Node modules for the browser",
   "type": "module",
   "exports": {
@@ -91,5 +91,6 @@
   "homepage": "https://github.com/geut/brode#readme",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "c828b4b92e189c7fc1e2b3fa06680616d93b12ec"
 }

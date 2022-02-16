@@ -1,6 +1,6 @@
 {
   "name": "@geut/brout",
-  "version": "3.0.8",
+  "version": "3.0.9",
   "description": "Log your browser scripts",
   "type": "module",
   "exports": {
@@ -72,5 +72,6 @@
   "homepage": "https://github.com/geut/brode#readme",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "c828b4b92e189c7fc1e2b3fa06680616d93b12ec"
 }

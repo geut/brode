@@ -1,6 +1,6 @@
 {
   "name": "@geut/brode",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "A polyfill Node.js browser platform",
   "type": "module",
   "exports": {
@@ -23,9 +23,9 @@
     "prepublishOnly": "npm test"
   },
   "dependencies": {
-    "@geut/brout": "^3.0.8",
-    "@geut/esbuild-plugin-brode": "^1.0.8",
-    "@geut/esbuild-plugin-server": "^1.0.9",
+    "@geut/brout": "^3.0.9",
+    "@geut/esbuild-plugin-brode": "^1.0.9",
+    "@geut/esbuild-plugin-server": "^1.0.10",
     "esbuild": "^0.13.8",
     "fastify": "^3.17.0",
     "get-port": "^5.1.1",
@@ -65,5 +65,6 @@
   "homepage": "https://github.com/geut/brode#readme",
   "publishConfig": {
     "access": "public"
-  }
+  },
+  "gitHead": "c828b4b92e189c7fc1e2b3fa06680616d93b12ec"
 }
