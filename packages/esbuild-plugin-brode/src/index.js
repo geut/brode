@@ -16,7 +16,7 @@ const getModule = (mod, pathname, filter) => {
   return pathname
 }
 
-function buildOptions ({ injectGlogal, environmentsFilter, modulesFilter }) {
+function buildOptions ({ injectGlobal, environmentsFilter, modulesFilter }) {
   const define = {}
   for (const env of Object.keys(process.env)) {
     const key = `process.env.${env}`
@@ -28,7 +28,7 @@ function buildOptions ({ injectGlogal, environmentsFilter, modulesFilter }) {
   define['process.argv'] = JSON.stringify(process.argv)
 
   const inject = [
-    getModule('global', require.resolve('./global.js'), () => injectGlogal)
+    getModule('global', require.resolve('./global.js'), () => injectGlobal)
   ].filter(Boolean)
 
   const modules = {}
@@ -48,7 +48,7 @@ function buildOptions ({ injectGlogal, environmentsFilter, modulesFilter }) {
 
 export default function brolyfill (opts = {}) {
   const {
-    injectGlogal = true,
+    injectGlobal = true,
     environmentsFilter = noop,
     modulesFilter = noop,
     dirnameFilter = noop
@@ -59,7 +59,7 @@ export default function brolyfill (opts = {}) {
     setup (build) {
       const options = build.initialOptions
       const { define: defaultDefine = {}, inject: defaultInject = [] } = options
-      const { define, inject, modules } = buildOptions({ injectGlogal, environmentsFilter, modulesFilter })
+      const { define, inject, modules } = buildOptions({ injectGlobal, environmentsFilter, modulesFilter })
       options.define = { ...define, ...defaultDefine }
       options.inject = [...inject, ...defaultInject]
       alias(build, modules)
