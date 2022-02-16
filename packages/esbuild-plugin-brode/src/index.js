@@ -9,9 +9,12 @@ const require = createRequire(import.meta.url)
 
 const CORE_MODULES = ['assert', 'buffer', 'crypto', 'console', 'constants', 'events', 'fs', 'module', 'path', 'os', 'url', 'util', 'process', 'timers', 'tty', 'stream', 'zlib']
 
+const STUB = require.resolve('./stub.js')
+
 const getModule = (mod, pathname, filter) => {
   const result = filter(mod)
   if (result === false) return
+  if (result === 'stub') return STUB
   if (typeof result === 'string') return result
   return pathname
 }
@@ -34,7 +37,7 @@ function buildOptions ({ injectGlobal, environmentsFilter, modulesFilter }) {
   const modules = {}
   for (const mod of CORE_MODULES) {
     const pathModule = getModule(mod, require.resolve(`@geut/browser-node-core/${mod}`), modulesFilter)
-    if (!pathModule) return pathModule
+    if (!pathModule) continue
     modules[mod] = pathModule
     modules[`node:${mod}`] = pathModule
   }
