@@ -1,6 +1,6 @@
 {
   "name": "@geut/brout",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Log your browser scripts",
   "type": "module",
   "exports": {
