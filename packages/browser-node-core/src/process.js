@@ -106,9 +106,8 @@ class Process extends EventEmitter {
       scope.$brout.process.exit(code)
       return
     }
-    if (code === 1) {
-      throw new Error('process.exit(1) called.')
-    }
+
+    if (code === 1) console.error('process.exit(1) called.')
   }
 
   setUncaughtExceptionCaptureCallback (cb) {
