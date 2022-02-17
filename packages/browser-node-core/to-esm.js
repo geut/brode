@@ -18,8 +18,7 @@ const browserifyModules = [
   'path-browserify',
   'vite-compatible-readable-stream',
   'util-browserify',
-  'querystring-browserify',
-  'browser-hrtime'
+  'querystring-browserify'
 ]
 
 function alias () {

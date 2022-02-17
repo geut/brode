@@ -1,9 +1,9 @@
 import { EventEmitter } from './events.js'
-import hrtime from './esm/browser-hrtime.js'
+import hrtime from './hrtime.js'
 import getScope from './scope.js'
 
 const scope = getScope()
-
+console.log(hrtime)
 const BROUT_ENABLED = typeof scope.$brout !== 'undefined'
 
 class Process extends EventEmitter {
