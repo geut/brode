@@ -44,6 +44,7 @@
   },
   "devDependencies": {
     "assert-browserify": "^2.0.0",
+    "browser-hrtime": "^1.1.8",
     "buffer-browserify": "npm:buffer@^6.0.3",
     "cpus": "^1.0.3",
     "cpy": "^8.1.2",
