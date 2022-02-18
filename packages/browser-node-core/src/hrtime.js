@@ -40,9 +40,9 @@ const hrtime = (previousTimestamp) => {
 }
 
 const NS_PER_SEC = 1e9
-hrtime.bigint = (time) => {
-  const diff = hrtime(time)
-  return (diff[0] * NS_PER_SEC + diff[1])
+hrtime.bigint = () => {
+  const diff = hrtime()
+  return BigInt(diff[0] * NS_PER_SEC + diff[1])
 }
 
 export { hrtime, hrtime as default }
