@@ -19,7 +19,9 @@ const getModule = (mod, pathname, filter) => {
   return pathname
 }
 
-function buildOptions ({ injectGlobal, environmentsFilter, modulesFilter }) {
+function buildOptions ({ injectGlobal = {}, environmentsFilter, modulesFilter }) {
+  const { process: injectProcess = true, buffer: injectBuffer = true, timers: injectTimers = false } = injectGlobal
+
   const define = {}
   for (const env of Object.keys(process.env)) {
     const key = `process.env.${env}`
@@ -29,10 +31,26 @@ function buildOptions ({ injectGlobal, environmentsFilter, modulesFilter }) {
   }
 
   define['process.argv'] = JSON.stringify(process.argv)
+  define.global = 'globalThis'
 
-  const inject = [
-    getModule('global', require.resolve('./global.js'), () => injectGlobal)
-  ].filter(Boolean)
+  const inject = [require.resolve('./global')]
+
+  if (injectProcess) {
+    define.process = '$process'
+  }
+
+  if (injectBuffer) {
+    define.Buffer = '$Buffer'
+  }
+
+  if (injectTimers) {
+    define.setTimeout = '$setTimeout'
+    define.setInterval = '$setInterval'
+    define.clearTimeout = '$clearTimeout'
+    define.clearInterval = '$clearInterval'
+    define.setImmediate = '$setImmediate'
+    define.clearImmediate = '$clearImmediate'
+  }
 
   const modules = {}
   for (const mod of CORE_MODULES) {
@@ -51,7 +69,7 @@ function buildOptions ({ injectGlobal, environmentsFilter, modulesFilter }) {
 
 export default function brolyfill (opts = {}) {
   const {
-    injectGlobal = true,
+    injectGlobal = {},
     environmentsFilter = noop,
     modulesFilter = noop,
     dirnameFilter = noop

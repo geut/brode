@@ -69,6 +69,9 @@ export class Brode {
           // }
         }),
         brode({
+          injectGlobal: {
+            timers: true
+          },
           dirnameFilter: () => true
         })
       ]

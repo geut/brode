@@ -1,8 +1,10 @@
-import { setTimeout, clearTimeout, setInterval, clearInterval, setImmediate, clearImmediate } from '@geut/browser-node-core/timers'
-import { Buffer as Buf } from '@geut/browser-node-core/buffer'
-import proc from '@geut/browser-node-core/process'
-
-export const Buffer = Buf
-export const process = proc
-export { setTimeout, clearTimeout, setInterval, clearInterval, setImmediate, clearImmediate }
-export const global = globalThis
+export { Buffer as $Buffer } from '@geut/browser-node-core/buffer'
+export { default as $process } from '@geut/browser-node-core/process'
+export {
+  setTimeout as $setTimeout,
+  setInterval as $setInterval,
+  clearTimeout as $clearTimeout,
+  clearInterval as $clearInterval,
+  setImmediate as $setImmediate,
+  clearImmediate as $clearImmediate
+} from '@geut/browser-node-core/timers'
