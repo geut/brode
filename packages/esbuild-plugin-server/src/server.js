@@ -151,7 +151,12 @@ export class Server extends NanoresourcePromise {
 
       const entryResource = this._files.find(entry => request.url.startsWith(entry.url))
       if (entryResource) {
-        reply.type(mime.lookup(request.url)).send(entryResource.text)
+        if (entryResource.text) {
+          reply.type(mime.lookup(request.url)).send(entryResource.text)
+        } else {
+          const content = await fs.readFile(entryResource.path).catch(() => {})
+          reply.type(mime.lookup(request.url)).send(content)
+        }
         return
       }
 
