@@ -26,7 +26,11 @@ export class Server extends NanoresourcePromise {
     this._onNotFound = onNotFound
 
     this._fastify = fastify({
-      logger: logger && ({ prettyPrint: true, ...(typeof logger === 'object' ? logger : {}) })
+      logger: logger && {
+        transport: {
+          target: 'pino-pretty'
+        }
+      }
     })
   }
 
