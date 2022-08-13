@@ -53,7 +53,7 @@ test('basic fail', async () => {
   ])
 })
 
-test('tap', async () => {
+test.skip('tap', async () => {
   const logs = []
 
   const brout = new Brout({
@@ -79,7 +79,7 @@ test('tap', async () => {
   ])
 })
 
-test('tap fail', async () => {
+test.skip('tap fail', async () => {
   const logs = []
 
   const brout = new Brout({

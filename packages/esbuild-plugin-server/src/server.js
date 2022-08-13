@@ -176,7 +176,7 @@ export class Server extends NanoresourcePromise {
     })
 
     this._port = await getPort({ port: this._port })
-    await this._fastify.listen(this._port)
+    await this._fastify.listen({ port: this._port, host: this._host })
   }
 
   close () {
