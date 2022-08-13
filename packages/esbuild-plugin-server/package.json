@@ -1,6 +1,6 @@
 {
   "name": "@geut/esbuild-plugin-server",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "esbuild plugin to run a dev server",
   "type": "module",
   "exports": {
