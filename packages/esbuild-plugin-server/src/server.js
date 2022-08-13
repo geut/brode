@@ -3,7 +3,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 
 import { NanoresourcePromise } from 'nanoresource-promise/emitter.js'
-import staticPlugin from 'fastify-static'
+import staticPlugin from '@fastify/static'
 import mime from 'mime-types'
 import fastify from 'fastify'
 import getPort from 'get-port'

@@ -19,9 +19,6 @@
     "lint": "standard",
     "prepublishOnly": "npm test"
   },
-  "peerDependencies": {
-    "esbuild": "^0.12.5"
-  },
   "dependencies": {
     "@geut/browser-node-core": "^2.0.1"
   },
