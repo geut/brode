@@ -3,8 +3,11 @@ import * as url from './esm/native-url.js'
 
 const scope = getScope()
 
-url.URL = scope.URL
+export const URL = scope.URL
 
-export const URL = url.URL
 export * from './esm/native-url.js'
-export default url
+
+export default {
+  ...url,
+  URL
+}
