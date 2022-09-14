@@ -24,8 +24,12 @@
 // AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-import { isBuffer } from './buffer.js'
 import { isPrimitive, inherits, isError, isFunction, isRegExp, isDate, inspect as utilInspect } from './util.js'
+
+function isBuffer (b) {
+  return b != null && b._isBuffer === true
+}
+
 function compare (a, b) {
   if (a === b) {
     return 0

@@ -103,6 +103,7 @@ class Process extends EventEmitter {
   }
 
   memoryUsage () {
+    // eslint-disable-next-line no-undef
     if (!performance && !performance.memory) {
       return {
         rss: 0,
@@ -112,6 +113,7 @@ class Process extends EventEmitter {
       }
     }
 
+    // eslint-disable-next-line no-undef
     const { memory } = performance
 
     return {
@@ -141,6 +143,10 @@ class Process extends EventEmitter {
         throw err
       }
     })
+  }
+
+  emitWarning (msg) {
+    console.warn(msg)
   }
 
   _getActiveHandles () {
