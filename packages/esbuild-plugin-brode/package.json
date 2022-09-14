@@ -25,6 +25,9 @@
   "devDependencies": {
     "standard": "^16.0.3"
   },
+  "peerDependencies": {
+    "esbuild": "^0.12.5"
+  },
   "standard": {
     "env": [
       "node",

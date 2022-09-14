@@ -8,7 +8,6 @@ import cpy from 'cpy'
 import MODULES from './src/supported-modules.js'
 
 const browserifyModules = [
-  'assert-browserify',
   'buffer-browserify',
   'cpus',
   'crypto-browserify',
@@ -49,6 +48,8 @@ function alias () {
 
 ;(async () => {
   const webModulesPath = path.resolve(path.join('src', 'web_modules'))
+
+  await del(path.resolve(path.join('src', 'esm')))
 
   await install(browserifyModules, {
     dest: webModulesPath,
