@@ -1,6 +1,6 @@
 {
   "name": "@geut/brode",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "A polyfill Node.js browser platform",
   "type": "module",
   "exports": {
@@ -24,7 +24,7 @@
   },
   "dependencies": {
     "@geut/brout": "^3.0.16",
-    "@geut/esbuild-plugin-brode": "^2.0.3",
+    "@geut/esbuild-plugin-brode": "^2.0.4",
     "@geut/esbuild-plugin-server": "^1.0.19",
     "esbuild": "^0.13.8",
     "fastify": "^3.17.0",
