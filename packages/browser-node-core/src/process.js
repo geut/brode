@@ -4,7 +4,7 @@ import getScope from './scope.js'
 
 const scope = getScope()
 const BROUT_ENABLED = typeof scope.$brout !== 'undefined'
-
+const kProcess = Symbol.for('brodeProcess')
 class Process extends EventEmitter {
   constructor () {
     super()
@@ -192,5 +192,11 @@ class Process extends EventEmitter {
   }
 }
 
-const p = new Process()
-export default p
+let proc
+if (scope[kProcess]) {
+  proc = scope[kProcess]
+} else {
+  proc = scope[kProcess] = new Process()
+}
+
+export default proc

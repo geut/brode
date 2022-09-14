@@ -7,29 +7,8 @@ import cpy from 'cpy'
 
 import MODULES from './src/supported-modules.js'
 
-const nextTick = `
-nextTick (handler, ...args) {
-  const hasProcess = typeof process !== undefined
-  if (hasProcess && process.exitCode !== null) return
+const SRC_PATH = path.resolve('./src')
 
-  if (typeof handler !== 'function') {
-    throw new TypeError('handler is not a function')
-  }
-
-  queueMicrotask(() => {
-    try {
-      handler(...args)
-    } catch (err) {
-      if (hasProcess && process.hasListeners('uncaughtException')) {
-        process.emit('uncaughtException', err)
-        return
-      }
-
-      throw err
-    }
-  })
-}
-`
 const browserifyModules = [
   {
     name: 'buffer-browserify'
@@ -53,9 +32,36 @@ const browserifyModules = [
     onLoad: (args) => {
       if (args.path === 'process') {
         return {
+          resolveDir: SRC_PATH,
           contents: `
+            import getScope from './scope.js'
+
+            const scope = getScope()
+
+            const proc = scope[Symbol.for('brodeProcess')]
+
             export default {
-              ${nextTick},
+              nextTick (handler, ...args) {
+                if (proc && proc.exitCode !== null) return
+
+                if (typeof handler !== 'function') {
+                  throw new TypeError('handler is not a function')
+                }
+
+                queueMicrotask(() => {
+                  try {
+                    handler(...args)
+                  } catch (err) {
+                    if (proc && proc.hasListeners('uncaughtException')) {
+                      proc.emit('uncaughtException', err)
+                      return
+                    }
+
+                    throw err
+                  }
+                })
+              },
+
               emitWarning(msg) {
                 console.log(msg)
               }
@@ -105,7 +111,7 @@ function alias (m) {
         }
 
         if (MODULES.includes(pathname)) {
-          console.log(pathname, path.resolve(path.join('src', `${pathname}.js`)))
+          console.log(pathname, path.join(SRC_PATH, `${pathname}.js`))
           return {
             path: `../${pathname}.js`,
             external: true
@@ -121,9 +127,9 @@ function alias (m) {
 }
 
 ;(async () => {
-  const webModulesPath = path.resolve(path.join('src', 'web_modules'))
+  const webModulesPath = path.join(SRC_PATH, 'web_modules')
 
-  await del(path.resolve(path.join('src', 'esm')))
+  await del(path.join(SRC_PATH, 'esm'))
 
   await install(browserifyModules.map(m => m.name), {
     dest: webModulesPath,
@@ -135,7 +141,7 @@ function alias (m) {
   await Promise.all(browserifyModules.map(async m => {
     await esbuild.build({
       entryPoints: [path.join(webModulesPath, `${m.name}.js`)],
-      outdir: 'src/esm',
+      outdir: path.join(SRC_PATH, 'esm'),
       bundle: true,
       format: 'esm',
       platform: 'browser',
