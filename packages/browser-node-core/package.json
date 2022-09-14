@@ -50,7 +50,7 @@
     "cpy": "^8.1.2",
     "crypto-browserify": "^3.12.0",
     "del": "^6.0.0",
-    "esbuild": "^0.13.8",
+    "esbuild": "^0.15.7",
     "esinstall": "^1.1.7",
     "eventemitter2": "^6.4.4",
     "fflate": "^0.7.0",
