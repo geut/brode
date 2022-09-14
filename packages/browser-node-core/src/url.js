@@ -1,5 +1,5 @@
 import getScope from './scope.js'
-import url from './esm/native-url.js'
+import * as url from './esm/native-url.js'
 
 const scope = getScope()
 
