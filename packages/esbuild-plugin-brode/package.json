@@ -1,6 +1,6 @@
 {
   "name": "@geut/esbuild-plugin-brode",
-  "version": "2.0.9",
+  "version": "2.0.10",
   "description": "esbuild plugin to add web polyfills to support node core modules and globals",
   "type": "module",
   "exports": {
@@ -20,7 +20,7 @@
     "prepublishOnly": "npm test"
   },
   "dependencies": {
-    "@geut/browser-node-core": "^2.0.8"
+    "@geut/browser-node-core": "^2.0.9"
   },
   "devDependencies": {
     "standard": "^16.0.3"
