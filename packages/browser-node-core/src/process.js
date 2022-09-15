@@ -158,6 +158,8 @@ class Process extends EventEmitter {
   }
 
   _initEvents () {
+    const self = this
+
     if (!scope.addEventListener) {
       return
     }
@@ -175,7 +177,7 @@ class Process extends EventEmitter {
         return
       }
 
-      process.nextTick(() => process.exit(1))
+      self.nextTick(() => self.exit(1))
     })
 
     scope.addEventListener('rejectionhandled', ev => this.emit('rejectionHandled', ev.reason, ev.promise))
