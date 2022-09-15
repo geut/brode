@@ -63,7 +63,7 @@ const browserifyModules = [
               },
 
               emitWarning(msg) {
-                console.log(msg)
+                console.warn(msg)
               }
             }
           `
