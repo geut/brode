@@ -1,4 +1,4 @@
-import { deflateSync, inflateSync, gzip, gunzip, zlibSync, unzlibSync } from 'fflate'
+import { deflateSync, inflateSync, gzip, gunzip, zlibSync, unzlibSync } from './esm/fflate.js'
 
 export const deflateRaw = deflateSync
 export const inflateRaw = inflateSync
