@@ -13,9 +13,13 @@ In Geut we are constantly creating Node.js modules with browser support and when
 
 > How I'm going to test a JavaScript module in Chrome/Firefox?
 
-That's why we create `brode`.
+That's why we created `brode`.
 
-In principle, `brode` is a command-line tool that allows you to run JavaScript files in the browser on top of a Node.js polyfill environment:
+In summary, `brode` is a command-line tool that allows you to run JavaScript files in the browser on top of a Node.js polyfill environment. 
+
+## Example
+
+Take a look at this example, here we are testing some code that will run on firefox:
 
 ```javascript
 // index.js
@@ -31,12 +35,17 @@ $ brode index.js --target firefox
 $ hello world
 ```
 
-`brode index.js --target firefox`:
+`brode index.js --target firefox`
+
+`brode` is doing the follwing for you:
+
 1. Compiles the `index.js` with [esbuild](https://esbuild.github.io/).
 1. Adds [polyfills](packages/esbuild-plugin-brode/README.md) for every Node.js core module/globals.
 1. Runs the build with [playwright](https://playwright.dev/).
 
-With this tool you can use test runners like [uvu](https://github.com/lukeed/uvu) to test your modules in Node.js and browsers.
+With `brode` you can use test runners like [uvu](https://github.com/lukeed/uvu) to test your modules in Node.js and browsers. 
+
+_Quick, small and easy._ 🤝
 
 ## Modules
 
