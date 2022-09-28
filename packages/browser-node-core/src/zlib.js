@@ -1,4 +1,5 @@
 import * as fflate from './esm/fflate.js'
+import { Buffer } from './buffer.js'
 
 function isBuffer (b) {
   return b != null && b._isBuffer === true
