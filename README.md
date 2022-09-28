@@ -1,5 +1,5 @@
 # brode
-Monorepo project for the polyfill Node.js browser platform: `brode`
+Monorepo project for the polyfill Node.js browser platform: `brode` 🤜 🤛
 
 ![Test Status](https://github.com/geut/brode/actions/workflows/test.yml/badge.svg)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -37,7 +37,7 @@ $ hello world
 
 `brode index.js --target firefox`
 
-`brode` is doing the follwing for you:
+`brode` is doing the following for you:
 
 1. Compiles the `index.js` with [esbuild](https://esbuild.github.io/).
 1. Adds [polyfills](packages/esbuild-plugin-brode/README.md) for every Node.js core module/globals.
@@ -45,7 +45,7 @@ $ hello world
 
 With `brode` you can use test runners like [uvu](https://github.com/lukeed/uvu) to test your modules in Node.js and browsers. 
 
-_Quick, small and easy._ 🤝
+_Quick, small and easy._ 🤜 🤛
 
 ## Modules
 
