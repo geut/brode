@@ -1,6 +1,6 @@
 {
   "name": "@geut/browser-node-core",
-  "version": "2.0.11",
+  "version": "2.0.12",
   "description": "Core Node modules for the browser",
   "type": "module",
   "exports": {
