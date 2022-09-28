@@ -12,7 +12,7 @@ function handleCallbackBuffer (from, cb) {
 }
 
 function handleBuffer (from, buf) {
-  if (buf && isBuffer(from)) return buf
+  if (buf && isBuffer(from)) return Buffer.from(buf)
   return buf
 }
 
@@ -44,12 +44,8 @@ export function gunzip (buf, options = {}, cb) {
   return fflate.gunzip(buf, options, handleCallbackBuffer(buf, cb))
 }
 
-export function gunzipSync (buf, options = {}, cb) {
-  if (typeof options === 'function') {
-    cb = options
-    options = {}
-  }
-  return fflate.gunzipSync(buf, options, handleCallbackBuffer(buf, cb))
+export function gunzipSync (buf, options = {}) {
+  return handleBuffer(buf, fflate.gunzipSync(buf, options))
 }
 
 export function gzip (buf, options, cb) {
