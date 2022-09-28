@@ -45,8 +45,8 @@ export function gunzip (buf, options = {}, cb) {
   return fflate.gunzip(buf, options, handleCallbackBuffer(buf, cb))
 }
 
-export function gunzipSync (buf, options = {}) {
-  return handleBuffer(buf, fflate.gunzipSync(buf, options))
+export function gunzipSync (buf) {
+  return handleBuffer(buf, fflate.gunzipSync(buf))
 }
 
 export function gzip (buf, options, cb) {
@@ -74,9 +74,8 @@ export function inflate (buf, options = {}, cb) {
   return fflate.inflate(buf, { size, ...fflateOpts }, handleCallbackBuffer(buf, cb))
 }
 
-export function inflateSync (buf, options = {}) {
-  const { chunkSize: size, ...fflateOpts } = options
-  return handleBuffer(buf, fflate.inflateSync(buf, { size, ...fflateOpts }))
+export function inflateSync (buf) {
+  return handleBuffer(buf, fflate.inflateSync(buf))
 }
 
 export const inflateRaw = inflate
@@ -90,12 +89,8 @@ export function unzip (buf, options = {}, cb) {
   return fflate.unzip(buf, options, handleCallbackBuffer(buf, cb))
 }
 
-export function unzipSync (buf, options = {}, cb) {
-  if (typeof options === 'function') {
-    cb = options
-    options = {}
-  }
-  return fflate.unzipSync(buf, options, handleCallbackBuffer(buf, cb))
+export function unzipSync (buf, options = {}) {
+  return handleBuffer(buf, fflate.unzipSync(buf, options))
 }
 
 export { fflate }
