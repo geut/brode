@@ -9,11 +9,11 @@ esbuild plugin to add web polyfills to support node core modules and globals
 
 ## Why
 
-There a several solutions out there to simulate a node environment in the browser. For example, Browserify and Parcel provides built-in polyfills, Webpack 5 and Rollup needs extra configuration like `rollup-plugin-node-polyfills`.
+There are several solutions out there to simulate a node environment in the browser. For example, Browserify and Parcel provide built-in polyfills, Webpack 5 and Rollup needs an extra configuration like `rollup-plugin-node-polyfills`.
 
-But in our experience most of this modules are outdated and it's always missing something.
+But, in our experience, most of these modules are outdated and are always missing something.
 
-We create this plugin for esbuild to provide a opinionated setup of web polyfills to support node modules that we want and we need in our apps.
+We created this plugin for esbuild to provide a opinionated setup of web polyfills to support node modules that we want and we need in our apps.
 
 ## Install
 
@@ -24,7 +24,7 @@ $ npm install --save-dev @geut/esbuild-plugin-brode
 ## Usage
 
 ```javascript
-const brode = require('@geut/esbuild-plugin-brode')
+import brode from "@geut/esbuild-plugin-brode";
 
 require('esbuild').buildSync({
   entryPoints: [...],
