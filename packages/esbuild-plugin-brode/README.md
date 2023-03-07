@@ -9,7 +9,7 @@ esbuild plugin to add web polyfills to support node core modules and globals
 
 ## Why
 
-There are several solutions out there to simulate a node environment in the browser. For example, Browserify and Parcel provide built-in polyfills, Webpack 5 and Rollup needs an extra configuration like `rollup-plugin-node-polyfills`.
+There are several solutions out there to simulate a node environment in the browser. For example, Browserify and Parcel provide built-in polyfills, whereas Webpack 5 and Rollup use an extra configuration like `rollup-plugin-node-polyfills`.
 
 But, in our experience, most of these modules are outdated and are always missing something.
 
